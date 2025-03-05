@@ -1,27 +1,21 @@
 const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
+	typeof window !== 'undefined' &&
+	window.document &&
+	window.document.createElement
 )
 
 export function getServerSideURL() {
-  let url = process.env.NEXT_PUBLIC_SERVER_URL
-
-  if (!url) {
-    url = 'http://localhost:3000'
-  }
-
-  return url
+	return process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'
 }
 
 export const getClientSideURL = () => {
-  if (canUseDOM) {
-    const protocol = window.location.protocol
-    const domain = window.location.hostname
-    const port = window.location.port
+	if (canUseDOM) {
+		const protocol = window.location.protocol
+		const domain = window.location.hostname
+		const port = window.location.port
 
-    return `${protocol}//${domain}${port ? `:${port}` : ''}`
-  }
+		return `${protocol}//${domain}${port ? `:${port}` : ''}`
+	}
 
-  return process.env.NEXT_PUBLIC_SERVER_URL || ''
+	return process.env.NEXT_PUBLIC_SERVER_URL || ''
 }
