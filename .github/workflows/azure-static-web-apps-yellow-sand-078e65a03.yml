@@ -10,17 +10,6 @@ on:
       - master
 
 jobs:
-  get_runner_ip:
-    runs-on: ubuntu-latest
-    name: Get Runner IP
-    steps:
-      - name: Get public IP
-        id: ip
-        run: |
-          echo "RUNNER_IP=$(curl -s https://api.ipify.org)" >> $GITHUB_ENV
-      - name: Print IP address
-        run: echo "Runner IP address is ${{ env.RUNNER_IP }}"
-
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
