@@ -14,6 +14,10 @@ importers:
       payload:
         specifier: 3.25.0
         version: 3.25.0(graphql@16.10.0)(typescript@5.7.3)
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.2.0
+        version: 3.2.0
 
   apps/website:
     dependencies:
@@ -92,9 +96,6 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
-      lexical:
-        specifier: ^0.27.0
-        version: 0.27.0
       masonry-pf:
         specifier: ^1.0.0
         version: 1.0.0
@@ -3054,9 +3055,6 @@ packages:
 
   lexical@0.21.0:
     resolution: {integrity: sha512-Dxc5SCG4kB+wF+Rh55ism3SuecOKeOtCtGHFGKd6pj2QKVojtjkxGTQPMt7//2z5rMSue4R+hmRM0pCEZflupA==}
-
-  lexical@0.27.0:
-    resolution: {integrity: sha512-8RSmAMLPO1jWy1k3g1rWVeLhCLxuxK1PAMqMEYSmCrlqVp3vS61qASjzEs3xyhwzkfhQ/ZgO60/wlepT5YI7lA==}
 
   lib0@0.2.99:
     resolution: {integrity: sha512-vwztYuUf1uf/1zQxfzRfO5yzfNKhTtgOByCruuiQQxWQXnPb8Itaube5ylofcV0oM0aKal9Mv+S1s1Ky0UYP1w==}
@@ -7847,8 +7845,6 @@ snapshots:
       type-check: 0.4.0
 
   lexical@0.21.0: {}
-
-  lexical@0.27.0: {}
 
   lib0@0.2.99:
     dependencies:
