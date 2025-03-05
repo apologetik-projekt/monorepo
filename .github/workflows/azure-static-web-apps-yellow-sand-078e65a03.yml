@@ -8,7 +8,6 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
-
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -33,7 +32,7 @@ jobs:
           action: "upload"
           app_location: "./apps/website" 
           app_build_command: "npm run payload migrate && npm run build"
-          output_location: "./apps/website/.next"
+          output_location: "apps/website/.next"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
