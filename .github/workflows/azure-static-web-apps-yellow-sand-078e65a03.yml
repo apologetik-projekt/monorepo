@@ -19,10 +19,6 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -36,7 +32,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "./apps/website" 
-          app_build_command: "pnpm i && pnpm build && pnpm payload migrate"
+          app_build_command: "npm build && npm payload migrate"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
