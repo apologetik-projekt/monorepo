@@ -1,0 +1,14 @@
+{
+  "name": "Apologetik Projekt",
+  "short_name": "AP",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "500x500",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone"
+}

@@ -1,0 +1,62 @@
+
+.rich-text-lexical .editor-container, .editor-placeholder {
+	font-family: var(--font-body);
+}
+
+.serif {
+	font-family: var(--font-serif);
+}
+
+.lexical-block.lexical-block-excerptBlock {
+	.editor-placeholder {
+		@extend .serif
+	}
+}
+
+.LexicalEditorTheme__ {
+	&h2 {
+		&:not(:first-of-type) {
+			margin-block-start: 1.8666667em;
+		}
+		margin-block-end: 1.0666667em;
+	}
+	&h3 {
+		&:not(:first-of-type) {
+			margin-block-start: 1.6666667em;
+		}
+		margin-block-end: .6666667em;
+	}
+	&quote {
+		&:not(:first-of-type) {
+			margin-block-start: 1.6666667em;
+		}
+		margin-block-end: 1.6666667em;
+	}
+	&paragraph {
+		&:not(:first-of-type) {
+			margin-block-start: 1.3333333em;
+		}
+		margin-block-end: 1.3333333em;
+	}
+}
+
+a.nav__link:not(:focus):not(.active) {
+	letter-spacing: 0.0275em;
+}
+.nav__link.active {
+	font-weight: 650;
+}
+
+.nav__logout {
+	display: flex;
+	place-items: center; 
+	gap: 3px;
+	font-size: 12px;
+	margin-bottom: -16px;
+}
+.nav__logout svg rect {
+	display: none;
+}
+.nav__logout:hover svg rect {
+	display: block;
+}

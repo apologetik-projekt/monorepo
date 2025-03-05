@@ -1,0 +1,18 @@
+.slug-field-component {
+	.lock-button {
+		all: unset;
+		position: absolute;
+		right: 6px;
+		top: 11px;
+		z-index: 100;
+		padding-inline: 10px;
+		opacity: 0.8;
+		border-left: 1px solid var(--theme-elevation-250);
+	}
+	.lock-button:hover {
+		cursor: pointer;
+	}
+	#field-slug {
+		padding-right: 42px;
+	}
+}

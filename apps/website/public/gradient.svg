@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="56.925 6.827 1920 1038.177" width="1920" height="1038.177" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.884" cy="-0.056" r="1.226" gradientTransform="matrix(-0.253, 0.967, -0.613, -0.16, 1.07, -0.848)" gradientUnits="objectBoundingBox">
+      <stop offset="0" style="stop-color: rgba(146, 125, 19, 0.2);"/>
+      <stop offset="0.573" style="stop-color: rgba(47, 47, 1, 0.33);"/>
+      <stop offset="1" style="stop-color: rgba(3, 2, 0, 0.15);"/>
+    </radialGradient>
+  </defs>
+  <path id="Pfad_1" data-name="Pfad 1" d="M 56.925 6.827 L 1976.925 6.827 L 1976.925 974.86 L 56.925 1045.004 L 56.925 6.827 Z" fill="url(#radial-gradient)"/>
+</svg>
