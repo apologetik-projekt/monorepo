@@ -33,6 +33,7 @@ jobs:
           action: "upload"
           app_location: "./apps/website" 
           app_build_command: "npm build && npm payload migrate"
+          output_location: "./apps/website/.next"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
