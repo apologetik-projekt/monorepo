@@ -25,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 		<ViewTransitions>
 			<html lang="de" suppressHydrationWarning>
 				<head>
+					<meta name="theme-color" content="#000" />
 					<link href="/favicon.ico" rel="icon" sizes="32x32" />
 					<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 				</head>

@@ -7,19 +7,19 @@ const localizedText = {
 	error: 'Verifizierung fehlgeschlagen. Versuche es später nochmal.',
 	expired: 'Verifizierung abgelaufen. Versuche es nochmal.',
 	footer:
-		'Geschützt durch <a href="https://altcha.org/de/captcha" target="_blank" aria-label="Besuche Altcha.org">ALTCHA</a>',
+		'<span class="hidden md:inline">Geschützt durch </span><a href="https://altcha.org/de/captcha" target="_blank" aria-label="Besuche Altcha.org">ALTCHA</a>',
 	label: 'Ich bin kein Bot 🤖',
 	verified: 'Erfolgreich verifiziert',
 	verifying: 'Wird überprüft...',
 	waitAlert: 'Wird überprüft... bitte warten.',
 }
 
-const Fallback = () => <div className="h-[47px] border border-gray-200" />
+const Fallback = () => <div className="h-[49px] border border-gray-200" />
 const AltchaWidget = dynamic(() => import('./AltchaWidget'), { ssr: false, loading: Fallback })
 
 export default function Altcha(props: JSX.AltchaWidgetReact) {
 	return (
-		<div className="h-12">
+		<div className="min-h-12">
 			<Style href="Altcha">
 				{{
 					'.altcha': {
@@ -31,11 +31,11 @@ export default function Altcha(props: JSX.AltchaWidgetReact) {
 					},
 					'.altcha-main': {
 						order: 1,
-						flex: 1,
+						flex: 'auto',
 					},
 					'.altcha-footer': {
 						order: 2,
-						flex: 1,
+						flex: 'auto',
 					},
 					'.altcha-error': {
 						order: 3,
