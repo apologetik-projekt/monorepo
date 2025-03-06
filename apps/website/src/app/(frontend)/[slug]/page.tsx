@@ -8,8 +8,6 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/live-preview'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
-export const runtime = 'edge'
-
 export async function generateStaticParams() {
 	const payload = await getPayload({ config: configPromise })
 	const pages = await payload.find({
