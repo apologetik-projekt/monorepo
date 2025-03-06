@@ -10,7 +10,6 @@ import { getPayload } from 'payload'
 import { importFonts } from '@/styles/fonts'
 import { Body } from '@/styles/layout.client'
 import { ViewTransitions } from 'next-view-transitions'
-import { AdminBar } from '@/components/admin-bar'
 import './global.css'
 importFonts()
 
@@ -37,7 +36,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					<Navigation navigation={navItems} />
 					{children}
 					<Footer />
-					<AdminBar />
 				</Body>
 			</html>
 		</ViewTransitions>
