@@ -5,8 +5,6 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { CollectionSlug } from 'payload'
 
-export const runtime = 'edge'
-
 export async function GET(
 	req: Request & {
 		cookies: {
