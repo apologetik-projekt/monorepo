@@ -4,7 +4,6 @@ const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://loc
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	output: process.env.NODE_ENV == 'production' ? 'standalone' : undefined,
 	devIndicators: {
 		position: 'bottom-right',
 	},
