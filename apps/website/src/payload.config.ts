@@ -17,6 +17,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import seoPlugin from '@/plugins/seo'
 import formBuilderPlugin from '@/plugins/formBuilder'
 import redirectPlugin from '@/plugins/redirects'
+import azureBlobStoragePlugin from '@/plugins/azureBlobStorage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -70,7 +71,7 @@ export default buildConfig({
 	}),
 	editor: lexicalEditor({ features: defaultEditorFeatures }),
 	sharp: sharp,
-	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin],
+	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin, azureBlobStoragePlugin],
 	typescript: {
 		outputFile: path.resolve(dirname, '../types/payload.d.ts'),
 	},
