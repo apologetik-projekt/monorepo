@@ -11,8 +11,8 @@
 	"sideEffects": false,
 	"packageManager": "pnpm@10.5.2",
 	"dependencies": {
-		"@payloadcms/db-postgres": "3.25.0",
-		"payload": "3.25.0"
+		"@payloadcms/db-postgres": "3.27.0",
+		"payload": "3.27.0"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.2.0"
