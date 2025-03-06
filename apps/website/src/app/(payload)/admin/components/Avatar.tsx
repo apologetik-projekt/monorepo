@@ -40,6 +40,12 @@ async function UserImage() {
 			? (user?.profilePicture?.sizes?.thumbnail?.url ?? fallbackImage)
 			: fallbackImage
 	return (
-		<Image style={{ borderRadius: '100%' }} src={url} width={25} height={25} alt="Profilbild" />
+		<Image
+			style={{ borderRadius: '100%', aspectRatio: '1/1', objectFit: 'cover' }}
+			src={url}
+			width={25}
+			height={25}
+			alt="Profilbild"
+		/>
 	)
 }
