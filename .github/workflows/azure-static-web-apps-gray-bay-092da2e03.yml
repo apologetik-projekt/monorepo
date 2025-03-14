@@ -8,6 +8,13 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
+env: 
+  NODE_VERSION: 20.19.0
+  PNPM_VERSION: 10.6.3
+  DATABASE_URI: ${{ secrets.DATABASE_URI }}
+  PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+  ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
+  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
 
 jobs:
   build_and_deploy_job:
@@ -19,21 +26,33 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: Build And Deploy
-        id: builddeploy
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install packages
+        run: NODE_ENV=development pnpm install
+      - name: Migrate database
+        run: pnpm run payload migrate
+      - name: Build
+        run: pnpm run build
+      - name: Deploy
+        id: deploy
+        # if: ${{ !env.ACT || env.DEPLOY == 'true' }}
         uses: Azure/static-web-apps-deploy@v1
-        env:
-          DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-          NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_BAY_092DA2E03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
+          skip_app_build: true
+          skip_api_build: true
           app_location: "./apps/website"
-          app_build_command: "npm run payload migrate && npm run build"
-          api_location: ""
+        env:
+          skip_deploy_on_missing_secrets: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
