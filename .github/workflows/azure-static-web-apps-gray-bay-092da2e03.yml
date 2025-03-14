@@ -46,7 +46,7 @@ jobs:
         run: NODE_ENV=development pnpm install
       - name: Migrate database
         working-directory: ./apps/website
-        run: pnpm run payload migrate
+        run: NODE_ENV=production pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
         run: pnpm run build
