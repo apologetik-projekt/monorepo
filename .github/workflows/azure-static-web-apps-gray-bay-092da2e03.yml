@@ -26,6 +26,14 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/pnpm/store
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v3
         with:
@@ -53,6 +61,7 @@ jobs:
           skip_app_build: true
           skip_api_build: true
           app_location: "./apps/website"
+          api_build_command: "rm -rf ./node_modules/@next/swc-*"
         env:
           skip_deploy_on_missing_secrets: true
 
