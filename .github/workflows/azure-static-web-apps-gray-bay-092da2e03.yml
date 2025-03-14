@@ -30,7 +30,7 @@ jobs:
         with:
           path: |
             ~/.local/share/pnpm/store
-            ${{ github.workspace }}/.next/cache
+            ${{ github.workspace }}/apps/website/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
@@ -46,7 +46,7 @@ jobs:
         run: NODE_ENV=development pnpm install
       - name: Migrate database
         working-directory: ./apps/website
-        run: NODE_ENV=production pnpm run payload migrate
+        run: pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
         run: pnpm run build
