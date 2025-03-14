@@ -2,28 +2,31 @@ import { RichText, type JSXConvertersFunction } from '@payloadcms/richtext-lexic
 import { FormBlock } from '@/blocks/Form/Component'
 import { ImageBlock } from '@/blocks/Media/Component'
 import type { Page } from '#/types/payload'
-import { type SerializedEditorState, type SerializedRootNode } from 'lexical'
+import {
+	type SerializedEditorState,
+	type SerializedRootNode,
+} from '@payloadcms/richtext-lexical/lexical'
 
 const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
-  ...defaultConverters,
-  blocks: {
-    imageBlock: ImageBlock,
-    formBlock: FormBlock,
-  },
+	...defaultConverters,
+	blocks: {
+		imageBlock: ImageBlock,
+		formBlock: FormBlock,
+	},
 })
 
 function isSerializedLexicalEditorState(data: unknown): data is SerializedEditorState {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    'root' in data &&
-    typeof (data as { root: unknown }).root === 'object' &&
-    ((data as { root: unknown })['root'] as SerializedRootNode).type === 'root'
-  )
+	return (
+		typeof data === 'object' &&
+		data !== null &&
+		'root' in data &&
+		typeof (data as { root: unknown }).root === 'object' &&
+		((data as { root: unknown })['root'] as SerializedRootNode).type === 'root'
+	)
 }
 
 export function RenderBlocks({ content }: { content: Page['content'] }) {
-  if (content && isSerializedLexicalEditorState(content)) {
-    return <RichText data={content} converters={jsxConverters} />
-  }
+	if (content && isSerializedLexicalEditorState(content)) {
+		return <RichText data={content} converters={jsxConverters} />
+	}
 }
