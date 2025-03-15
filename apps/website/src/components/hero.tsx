@@ -1,6 +1,6 @@
 import * as motion from 'motion/react-client'
 import { headers } from 'next/headers'
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import { isbot } from 'isbot'
 import { preload } from 'react-dom'
 
@@ -37,7 +37,11 @@ const textVariants = {
 
 interface Props {
 	heading: string
-	image: any
+	image: {
+		src: string | StaticImageData
+		width: number
+		height: number
+	}
 }
 
 export async function Hero({ heading, image }: Props) {
@@ -62,11 +66,12 @@ export async function Hero({ heading, image }: Props) {
 						>
 							<Image
 								alt="Zwei Personen unterhalten sich"
-								width={300}
-								height={220}
-								className="m-0 bg-amber-500 saturate-[115%] w-full"
+								width={image.width}
+								height={image.height}
+								className="m-0 bg-[#D0C9BC] saturate-[115%] w-full"
 								loading="eager"
-								src={image?.url ?? '/image.png'}
+								placeholder="blur"
+								src={image.src}
 							/>
 						</motion.div>
 						<motion.div

@@ -1,6 +1,11 @@
 import { Hero } from '@/components/hero'
 import Page, { generateMetadata } from './[slug]/page'
+import Image from 'next/image'
 import Link from 'next/link'
+import HeroImage from '../../../public/hero.jpg'
+import BibleImage from '../../../public/bible.webp'
+
+export { generateMetadata }
 
 export default function Index() {
 	return (
@@ -8,7 +13,9 @@ export default function Index() {
 			<Hero
 				heading={'Christentum. Nicht nur schön, sondern auch wahr.'}
 				image={{
-					src: 'https://assets.apologetik-projekt.de/image?src=https%3A%2F%2Fapologetik-strapi.s3.eu-central-003.backblazeb2.com%2Fconversation_05dfe73ea5.jpg&width=900&height=660&fit=cover&position=center&background[]=0&background[]=0&background[]=0&background[]=0&quality=80&compressionLevel=9&loop=0&delay=100&crop=null&contentType=image%2Fwebp',
+					src: HeroImage,
+					height: 300,
+					width: HeroImage.width / (HeroImage.height / 300),
 				}}
 			/>
 			<div className="[&_.prose]:prose-lg">
@@ -21,32 +28,30 @@ export default function Index() {
 	)
 }
 
-export { generateMetadata }
-
 function Cards() {
 	return (
 		<div className="relative p-12 bg-black md:mt-10 -mx-5 md:-mx-9 flex flex-col md:flex-row align-top gap-x-8 gap-y-16 items-center">
 			<div className="grid stack px-1 py-4 md:w-[95%]">
 				<div className="bg-white rounded-xs shadow-sm -rotate-12 opacity-70">
-					<div className="rounded-t-sm aspect-video bg-linear-to-r from-yellow-400 via-ping-500 to-orange-400" />
+					<div className="rounded-t-xs aspect-video bg-linear-to-r from-yellow-400 via-ping-500 to-orange-400" />
 					<div className="p-4">
 						<div className="text-2xl font-bold tracking-tight text-gray-900">Artikel 1</div>
 					</div>
 				</div>
 				<div className="bg-white rounded-xs shadow-lg rotate-3 opacity-80">
-					<div className="rounded-t-sm aspect-video bg-linear-to-r from-teal-500 from-10% via-sky-500 via-30% to-red-500 to-90%" />
+					<div className="rounded-t-xs aspect-video bg-linear-to-r from-teal-500 from-10% via-sky-500 via-30% to-red-500 to-90%" />
 					<div className="p-4">
 						<div className="text-2xl font-bold tracking-tight text-gray-900">Artikel 2</div>
 					</div>
 				</div>
 				<div className="bg-white rounded-xs shadow-xl -rotate-3 hover:cursor-default">
-					<picture>
-						<img
-							className="rounded-t-sm aspect-video"
-							src="https://assets.apologetik-projekt.de/image?src=https%3A%2F%2Fapologetik-strapi.s3.eu-central-003.backblazeb2.com%2FDesign_ohne_Titel_6_38de128dbf.png&width=900&height=498&fit=cover&position=center&background[]=0&background[]=0&background[]=0&background[]=0&quality=80&compressionLevel=9&loop=0&delay=100&crop=null&contentType=image%2Fwebp"
-							alt=""
-						/>
-					</picture>
+					<Image
+						src={BibleImage.src}
+						className="rounded-t-xs aspect-video"
+						alt="bible"
+						width={600}
+						height={BibleImage.height / (BibleImage.width / 600)}
+					/>
 					<div className="p-4">
 						<div className="font-mono text-2xl font-bold tracking-tight text-gray-900 leading-none">
 							Historische Zuverlässigkeit des Lukas-Evangeliums
