@@ -8,26 +8,6 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/live-preview'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
-export async function generateStaticParams() {
-	const payload = await getPayload({ config: configPromise })
-	const pages = await payload.find({
-		collection: 'pages',
-		draft: false,
-		limit: 1000,
-		overrideAccess: false,
-		pagination: false,
-		select: {
-			slug: true,
-		},
-	})
-
-	const params = pages.docs
-		?.filter((doc) => doc.slug !== 'home' && doc.slug !== null)
-		.map(({ slug }) => ({ slug }))
-
-	return params
-}
-
 type Args = {
 	params: Promise<{
 		slug?: string
