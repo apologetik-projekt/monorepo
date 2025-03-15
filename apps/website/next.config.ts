@@ -1,10 +1,11 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import NextBundleAnalyzer from '@next/bundle-analyzer'
+import type { NextConfig } from 'next'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-	output: 'standalone',
+	//output: 'standalone',
 	devIndicators: {
 		position: 'bottom-right',
 	},
@@ -15,12 +16,12 @@ const nextConfig = {
 
 				return {
 					hostname: url.hostname,
-					protocol: url.protocol.replace(':', ''),
+					protocol: url.protocol.replace(':', '') as 'http' | 'https',
 				}
 			}),
 		],
 	},
-	redirects() {
+	async redirects() {
 		return [
 			{
 				source: '/login',
@@ -34,6 +35,10 @@ const nextConfig = {
 			},
 		]
 	},
-}
+} satisfies NextConfig
 
-export default withPayload(nextConfig, { devBundleServerPackages: true })
+const withBundleAnalyzer = NextBundleAnalyzer({
+	enabled: process.env.ANALYZE === 'true',
+})
+
+export default withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true })

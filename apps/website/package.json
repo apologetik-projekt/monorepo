@@ -12,10 +12,12 @@
 		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
 		"lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
 		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-		"start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+		"start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+		"analyze": "cross-env ANALYZE=true pnpm run build"
 	},
 	"dependencies": {
 		"@cassiozen/usestatemachine": "^1.0.1",
+		"@next/bundle-analyzer": "^15.2.2",
 		"@payloadcms/db-postgres": "3.28.1",
 		"@payloadcms/email-nodemailer": "3.28.1",
 		"@payloadcms/live-preview-react": "3.28.1",
