@@ -5,7 +5,7 @@ import type { NextConfig } from 'next'
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 const nextConfig = {
-	//output: 'standalone',
+	output: 'standalone',
 	devIndicators: {
 		position: 'bottom-right',
 	},
