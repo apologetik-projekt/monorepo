@@ -49,8 +49,8 @@ function Cards() {
 						src={BibleImage.src}
 						className="rounded-t-xs aspect-video"
 						alt="bible"
-						width={600}
-						height={BibleImage.height / (BibleImage.width / 600)}
+						width={300}
+						height={BibleImage.height / (BibleImage.width / 300)}
 					/>
 					<div className="p-4">
 						<div className="font-mono text-2xl font-bold tracking-tight text-gray-900 leading-none">
