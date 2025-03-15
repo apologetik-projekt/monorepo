@@ -5,7 +5,6 @@ import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import { consoleMail } from './utilities/consoleMail'
 import { Pages } from './collections/Pages/config'
 import { Posts } from './collections/Posts/config'
 import { Authors } from './collections/Authors'
@@ -18,6 +17,7 @@ import seoPlugin from '@/plugins/seo'
 import formBuilderPlugin from '@/plugins/formBuilder'
 import redirectPlugin from '@/plugins/redirects'
 import azureBlobStoragePlugin from '@/plugins/azureBlobStorage'
+import { consoleMailer, nodeMailer } from './plugins/emailAdapters'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -79,7 +79,7 @@ export default buildConfig({
 		fallbackLanguage: 'de',
 		supportedLanguages: { de, en },
 	},
-	email: consoleMail(),
+	email: process.env.NODE_ENV == 'production' ? nodeMailer : () => consoleMailer,
 	secret: process.env.PAYLOAD_SECRET || '',
 	telemetry: false,
 })
