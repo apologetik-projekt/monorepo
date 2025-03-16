@@ -11,6 +11,7 @@ export const consoleMailer = {
 }
 
 export const nodeMailer = nodemailerAdapter({
+	skipVerify: true,
 	defaultFromAddress: 'DoNotReply@apologetik-projekt.de',
 	defaultFromName: 'Apologetik Projekt',
 	transportOptions: {
