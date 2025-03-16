@@ -119,6 +119,9 @@ export default async function Article({ params: paramsPromise }: Args) {
 					href="https://api.fonts.coollabs.io/css2?family=Noticia+Text&display=swap"
 				/>
 				<RichText className="break-words" data={article.content!} />
+				{article.appendix!.root.children.length > 1 && (
+					<RichText className="break-words" data={article.appendix!} />
+				)}
 			</section>
 		</article>
 	)

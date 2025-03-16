@@ -35,7 +35,6 @@ import { LogoutButton as LogoutButton_0e0b64c99b38812371163fa31fbe5248 } from '@
 import { Icon as Icon_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo.tsx'
 import { Logo as Logo_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo.tsx'
 import { default as default_f5637b17ef35040cd7b6bec66113a54c } from '@/app/(payload)/admin/components/NavLinks'
-import { AzureClientUploadHandler as AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104 } from '@payloadcms/storage-azure/client'
 import { default as default_18bb40269632d984e1697dac993c76c7 } from '@/app/(payload)/admin/components/Dashboard'
 
 export const importMap = {
@@ -76,6 +75,5 @@ export const importMap = {
   "@/components/logo.tsx#Icon": Icon_98b9c1e527fb6c856d7dd54df5e3faa4,
   "@/components/logo.tsx#Logo": Logo_98b9c1e527fb6c856d7dd54df5e3faa4,
   "@/app/(payload)/admin/components/NavLinks#default": default_f5637b17ef35040cd7b6bec66113a54c,
-  "@payloadcms/storage-azure/client#AzureClientUploadHandler": AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104,
   "@/app/(payload)/admin/components/Dashboard#default": default_18bb40269632d984e1697dac993c76c7
 }

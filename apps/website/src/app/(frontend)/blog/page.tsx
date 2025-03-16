@@ -117,8 +117,8 @@ function Article({ article }: { article: Post }) {
 					alt={article.title}
 					className="object-cover aspect-[27.5/17] w-full"
 					src={
-						typeof article.coverImage == 'object' && article.coverImage.url
-							? article.coverImage.url
+						typeof article.coverImage == 'object' && article.coverImage?.url
+							? article.coverImage?.url
 							: '/blur-bg.jpg'
 					}
 					loading="lazy"

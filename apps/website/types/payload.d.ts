@@ -286,6 +286,21 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  appendix?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   relatedPosts?: (number | Post)[] | null;
   meta?: {
     title?: string | null;
@@ -777,6 +792,7 @@ export interface PostsSelect<T extends boolean = true> {
   coverImage?: T;
   description?: T;
   content?: T;
+  appendix?: T;
   relatedPosts?: T;
   meta?:
     | T
