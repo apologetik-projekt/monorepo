@@ -17,7 +17,7 @@ import seoPlugin from '@/plugins/seo'
 import formBuilderPlugin from '@/plugins/formBuilder'
 import redirectPlugin from '@/plugins/redirects'
 import azureBlobStoragePlugin from '@/plugins/azureBlobStorage'
-import { consoleMailer, nodeMailer } from './plugins/emailAdapters'
+import { consoleMailer, nodeMailer } from './plugins/emailAdapter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
