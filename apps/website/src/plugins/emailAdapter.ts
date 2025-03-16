@@ -11,7 +11,7 @@ export const consoleMailer = {
 }
 
 export const nodeMailer = nodemailerAdapter({
-	defaultFromAddress: 'noreply@apologetik-projekt.de',
+	defaultFromAddress: 'DoNotReply@apologetik-projekt.de',
 	defaultFromName: 'Apologetik Projekt',
 	transportOptions: {
 		host: process.env.SMTP_HOST,
