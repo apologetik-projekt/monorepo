@@ -49,7 +49,7 @@ jobs:
         run: pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
-        run: NEXT_TELEMETRY_DISABLED=1 pnpm run build
+        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
       - name: Deploy
         id: deploy
         # if: ${{ !env.ACT || env.DEPLOY == 'true' }}
