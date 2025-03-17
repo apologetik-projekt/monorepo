@@ -44,8 +44,8 @@ export default async function Blog() {
 							alt={latestArticle.title}
 							className="object-cover aspect-[27.5/17] w-full"
 							src={
-								typeof latestArticle.coverImage == 'object' && latestArticle.coverImage.url
-									? latestArticle.coverImage.url
+								typeof latestArticle.coverImage == 'object' && latestArticle.coverImage?.url
+									? latestArticle.coverImage?.url
 									: fallBackImage
 							}
 							loading="eager"
