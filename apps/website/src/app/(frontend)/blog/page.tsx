@@ -133,7 +133,7 @@ function Article({ article }: { article: Post }) {
 						<div className="-translate-x-[3px]">
 							<div className="rounded-full overflow-hidden bg-yellow-400 aspect-square size-6">
 								{typeof article.author == 'object' &&
-									typeof article.author.profilePicture == 'object' &&
+									typeof article.author?.profilePicture == 'object' &&
 									article.author!.profilePicture?.url && (
 										<Image
 											style={{ viewTransitionName: `author-image-${article.slug}` }}
