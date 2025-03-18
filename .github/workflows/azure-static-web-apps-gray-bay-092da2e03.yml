@@ -11,6 +11,7 @@ on:
 env: 
   NODE_VERSION: 20.19.0
   PNPM_VERSION: 10.6.3
+  NODE_ENV: production
   DATABASE_URI: ${{ secrets.DATABASE_URI }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
@@ -26,6 +27,8 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Install packages
+        run: echo ${{ env.NODE_ENV }}
       - uses: actions/cache@v4
         with:
           path: |
