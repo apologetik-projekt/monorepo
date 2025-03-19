@@ -27,24 +27,22 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/pnpm/store
-            ${{ github.workspace }}/apps/website/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: Use pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
-      - name: get pnpm store
-        run: echo $(pnpm store path)
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: |
+            /home/runner/setup-pnpm/node_modules/.bin/store/v10
+            ${{ github.workspace }}/apps/website/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install packages
         run: NODE_ENV=development pnpm install
       - name: Migrate database
