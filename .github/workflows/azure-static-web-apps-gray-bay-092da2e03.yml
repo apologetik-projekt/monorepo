@@ -27,6 +27,8 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: get pnpm store
+        run: echo $(pnpm store path)
       - uses: actions/cache@v4
         with:
           path: |
