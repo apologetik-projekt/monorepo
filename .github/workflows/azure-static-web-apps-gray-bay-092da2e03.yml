@@ -22,7 +22,7 @@ jobs:
     name: Build and Deploy Job
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
+      url: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
       NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
@@ -56,8 +56,6 @@ jobs:
       - name: Build
         working-directory: ./apps/website
         run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
-      - name: Test
-        run: echo ${{ vars.AZURE_ENVIRONMENT }}
       - name: Deploy
         id: deploy
         # if: ${{ !env.ACT || env.DEPLOY == 'true' }}
