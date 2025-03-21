@@ -12,17 +12,20 @@ env:
   NODE_VERSION: 20.19.0 # Check support on azure before updating
   PNPM_VERSION: 10.6.3
   NODE_ENV: production
-  DATABASE_URI: ${{ secrets.DATABASE_URI }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
 
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'production' || 'preview' }}
     name: Build and Deploy Job
+    environment: 
+      name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
+      url: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
+    env:
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
+      NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
