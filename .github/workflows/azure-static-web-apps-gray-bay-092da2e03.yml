@@ -26,7 +26,7 @@ jobs:
       url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && vars.NEXT_PUBLIC_SERVER_URL || env.AZURE_DYNAMIC_PREVIEW_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
-      NEXT_PUBLIC_SERVER_URL: ${{ inputs.environment.url }}
+      NEXT_PUBLIC_SERVER_URL: ${{ jobs.build_and_deploy_job.environment.url }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -72,7 +72,7 @@ jobs:
           api_build_command: "rm -rf ./node_modules/@next/swc-*"
         env:
           skip_deploy_on_missing_secrets: true
-          NEXT_PUBLIC_SERVER_URL: ${{ inputs.environment.url }}
+          NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
 
   close_pull_request_job:
