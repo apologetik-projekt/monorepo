@@ -56,6 +56,8 @@ jobs:
       - name: Build
         working-directory: ./apps/website
         run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
+      - name: Test
+        run: echo ${{ vars.AZURE_ENVIRONMENT }}
       - name: Deploy
         id: deploy
         # if: ${{ !env.ACT || env.DEPLOY == 'true' }}
@@ -63,7 +65,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_BAY_092DA2E03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          production_branch: "master"
+          #production_branch: "master"
           deployment_environment: ${{ vars.AZURE_ENVIRONMENT }}
           action: "upload"
           skip_app_build: true
