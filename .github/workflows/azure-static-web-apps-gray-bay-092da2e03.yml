@@ -14,6 +14,7 @@ env:
   NODE_ENV: production
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
+  AZURE_DYNAMIC_PREVIEW_URL: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
 
 jobs:
   build_and_deploy_job:
@@ -22,7 +23,7 @@ jobs:
     name: Build and Deploy Job
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
+      url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && vars.NEXT_PUBLIC_SERVER_URL || env.AZURE_DYNAMIC_PREVIEW_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
       NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
