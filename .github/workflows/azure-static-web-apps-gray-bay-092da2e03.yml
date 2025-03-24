@@ -43,12 +43,12 @@ jobs:
       - name: Set environment url
         id: env_url
         run: |
-          if [[ "${{ job.environment }}" == "Preview" ]]; then
+          if [[ "${{ inputs.environment }}" == "Preview" ]]; then
             DEPLOYMENT_URL=${{ vars.NEXT_PUBLIC_SERVER_URL }}
           elseif
             DEPLOYMENT_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}
           fi
-          echo "${{ job.environment }}"
+          echo "${{ inputs.environment }}"
           echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
           echo "NEXT_PUBLIC_SERVER_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
       - uses: actions/cache@v4
