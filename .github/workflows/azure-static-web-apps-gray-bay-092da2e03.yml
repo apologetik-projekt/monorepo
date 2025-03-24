@@ -23,10 +23,9 @@ jobs:
     name: Build and Deploy Job
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && vars.NEXT_PUBLIC_SERVER_URL || env.AZURE_DYNAMIC_PREVIEW_URL }}
+      url: ${{ steps.env_url.outputs.DEPLOYMENT_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
-      NEXT_PUBLIC_SERVER_URL: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && vars.NEXT_PUBLIC_SERVER_URL || env.AZURE_DYNAMIC_PREVIEW_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -41,6 +40,17 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
+      - name: Set environment url
+        id: env_url
+        run: |
+          if [[ "${{ matrix.environment.name }}" == "Preview" ]]; then
+            DEPLOYMENT_URL=${{ vars.NEXT_PUBLIC_SERVER_URL }}
+          elseif
+            DEPLOYMENT_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}
+          fi
+          echo "${{ matrix.environment.name }}"
+          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "NEXT_PUBLIC_SERVER_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
       - uses: actions/cache@v4
         with:
           path: |
