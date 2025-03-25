@@ -23,7 +23,7 @@ jobs:
     name: Build and Deploy Job
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ steps.env_url.outputs.DEPLOYMENT_URL }}
+      url: ${{ steps.env_url.outputs.NEXT_PUBLIC_SERVER_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
@@ -43,10 +43,10 @@ jobs:
       - name: Set environment url
         id: env_url
         run: |
-          if [[ "${{ env.NEXT_PUBLIC_SERVER_URL }}" == "" ]]; then
-            echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_ENV
+          if [[ ! -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
+            NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}
           fi
-          echo "DEPLOYMENT_URL=$NEXT_PUBLIC_SERVER_URL" >> $GITHUB_OUTPUT
+          echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" >> "$GITHUB_OUTPUT" >> "$GITHUB_ENV"
       - uses: actions/cache@v4
         with:
           path: |
