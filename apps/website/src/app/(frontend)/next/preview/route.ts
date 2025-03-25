@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { CollectionSlug } from 'payload'
 import { NextResponse } from 'next/server'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export const revalidate = 0
 export const dynamic = 'force-dynamic'
@@ -98,7 +99,8 @@ export async function GET(
 
 		draft.enable()
 
-		const res = NextResponse.redirect(path)
+		const url = `${getServerSideURL()}/${path}`
+		const res = NextResponse.redirect(url)
 		res.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
 		res.headers.set('Pragma', 'no-cache')
 		res.headers.set('Expires', '0')
