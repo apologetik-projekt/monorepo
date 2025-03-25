@@ -17,10 +17,10 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
 	const { slug } = await paramsPromise
-	if (!slug || slug == 'home') return <PayloadRedirects url="/" />
+	if (slug == 'home') return <PayloadRedirects url="/" />
 	const url = '/' + slug
 
-	let page = await queryPageBySlug({ slug })
+	let page = await queryPageBySlug({ slug: slug ?? 'home' })
 
 	if (!page) return <PayloadRedirects url={url} />
 
