@@ -46,7 +46,8 @@ jobs:
           if [[ ! -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
             NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}
           fi
-          echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" >> "$GITHUB_OUTPUT" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" >> "$GITHUB_OUTPUT" 
+          echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" >> "$GITHUB_ENV"
       - uses: actions/cache@v4
         with:
           path: |
