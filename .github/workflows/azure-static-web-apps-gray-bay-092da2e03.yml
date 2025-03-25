@@ -43,7 +43,7 @@ jobs:
       - name: Set environment url
         id: env_url
         run: |
-          if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
+          if [[ ! -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
             echo "NEXT_PUBLIC_SERVER_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> "$GITHUB_OUTPUT"
             echo "NEXT_PUBLIC_SERVER_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> "$GITHUB_ENV"
           else
