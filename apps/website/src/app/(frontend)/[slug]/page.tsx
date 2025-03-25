@@ -7,20 +7,22 @@ import React, { cache } from 'react'
 import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/live-preview'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { redirect } from 'next/navigation'
 
 type Args = {
 	params: Promise<{
-		slug?: string
+		slug: string
+		index?: boolean
 	}>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
-	const { slug } = await paramsPromise
-	if (slug == 'home') return <PayloadRedirects url="/" />
+	const { slug, index = false } = await paramsPromise
+	if (!slug || (slug == 'home' && !index)) redirect('/')
 	const url = '/' + slug
 
-	let page = await queryPageBySlug({ slug: slug ?? 'home' })
+	let page = await queryPageBySlug({ slug })
 
 	if (!page) return <PayloadRedirects url={url} />
 

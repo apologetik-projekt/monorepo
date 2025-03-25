@@ -22,7 +22,7 @@ export default function Index() {
 				}}
 			/>
 			<div className="[&_.prose]:prose-lg">
-				<Page params={Promise.resolve({ slug: 'home' })} />
+				<Page params={Promise.resolve({ slug: 'home', index: true })} />
 			</div>
 			<section style={{ fontSize: 18 }} className="max-w-2xl mx-auto -mb-10 sm:mb-10 px-5 md:px-2">
 				<Cards />
