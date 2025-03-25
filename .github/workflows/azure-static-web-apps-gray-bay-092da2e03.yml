@@ -20,17 +20,22 @@ jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Build and Deploy
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ steps.env_url.outputs.DEPLOYMENT_URL }}
+      url: ${{ steps.setup.outputs.DEPLOYMENT_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
+        id: setup
+        run: |
+          if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
+            echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_ENV
+            echo "DEPLOYMENT_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_OUTPUT
+          else
+            echo "DEPLOYMENT_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> $GITHUB_OUTPUT
+          fi
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v3
         with:
@@ -40,15 +45,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-      - name: Set environment url
-        id: env_url
-        run: |
-          if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
-            echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_ENV
-            echo "DEPLOYMENT_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_OUTPUT
-          else
-            echo "DEPLOYMENT_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> $GITHUB_OUTPUT
-          fi
       - uses: actions/cache@v4
         with:
           path: |
