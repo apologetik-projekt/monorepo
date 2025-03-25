@@ -4,8 +4,10 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { CollectionSlug } from 'payload'
+import { NextResponse } from 'next/server'
 
 export const revalidate = 0
+export const dynamic = 'force-dynamic'
 
 export async function GET(
 	req: Request & {
@@ -26,26 +28,30 @@ export async function GET(
 	const previewSecret = searchParams.get('previewSecret')
 
 	if (previewSecret) {
-		return new Response('You are not allowed to preview this page', { status: 403 })
+		return new Response('Du bist nicht berechtigt den Entwurf dieser Seite anzusehen', {
+			status: 403,
+		})
 	} else {
 		if (!path) {
-			return new Response('No path provided', { status: 404 })
+			return new Response('Kein Pfad angegeben', { status: 404 })
 		}
 
 		if (!collection) {
-			return new Response('No path provided', { status: 404 })
+			return new Response('Kein Pfad angegeben', { status: 404 })
 		}
 
 		if (!slug) {
-			return new Response('No path provided', { status: 404 })
+			return new Response('Kein Pfad angegeben', { status: 404 })
 		}
 
 		if (!token) {
-			new Response('You are not allowed to preview this page', { status: 403 })
+			new Response('Du bist nicht berechtigt den Entwurf dieser Seite anzusehen', { status: 403 })
 		}
 
 		if (!path.startsWith('/')) {
-			new Response('This endpoint can only be used for internal previews', { status: 500 })
+			new Response('Dieser Endpunkt kann nur für interne Vorschauen verwendet werden', {
+				status: 500,
+			})
 		}
 
 		let user
@@ -61,7 +67,9 @@ export async function GET(
 		// You can add additional checks here to see if the user is allowed to preview this page
 		if (!user) {
 			draft.disable()
-			return new Response('You are not allowed to preview this page', { status: 403 })
+			return new Response('Du bist nicht berechtigt den Entwurf dieser Seite anzusehen', {
+				status: 403,
+			})
 		}
 
 		// Verify the given slug exists
@@ -82,7 +90,7 @@ export async function GET(
 			})
 
 			if (!docs.docs.length) {
-				return new Response('Document not found', { status: 404 })
+				return new Response('Seite konnte nicht gefunden werden', { status: 404 })
 			}
 		} catch (error) {
 			payload.logger.error('Error verifying token for live preview:', error)
@@ -90,6 +98,10 @@ export async function GET(
 
 		draft.enable()
 
-		redirect(path)
+		const res = NextResponse.redirect(path)
+		res.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
+		res.headers.set('Pragma', 'no-cache')
+		res.headers.set('Expires', '0')
+		return res
 	}
 }

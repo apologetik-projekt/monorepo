@@ -5,6 +5,9 @@ import Link from 'next/link'
 import HeroImage from '../../../public/hero.jpg'
 import BibleImage from '../../../public/bible.webp'
 
+export const dynamic = 'force-static'
+export const revalidate = 60
+
 export { generateMetadata }
 
 export default function Index() {
