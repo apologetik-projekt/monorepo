@@ -28,6 +28,7 @@ jobs:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
+      - name: Initialize Environment
         id: setup
         run: |
           if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
