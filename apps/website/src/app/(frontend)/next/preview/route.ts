@@ -99,8 +99,7 @@ export async function GET(
 
 		draft.enable()
 
-		const url = `${getServerSideURL()}/${path}`
-		const res = NextResponse.redirect(url)
+		const res = NextResponse.redirect(getServerSideURL() + path)
 		res.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
 		res.headers.set('Pragma', 'no-cache')
 		res.headers.set('Expires', '0')
