@@ -37,6 +37,7 @@
 		"@types/jsonwebtoken": "^9.0.9",
 		"altcha": "^1.2.0",
 		"altcha-lib": "^1.2.0",
+		"applicationinsights": "^3.6.0",
 		"clsx": "^2.1.1",
 		"cross-env": "^7.0.3",
 		"graphql": "^16.8.1",
