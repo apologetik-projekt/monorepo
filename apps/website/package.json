@@ -16,6 +16,7 @@
 		"analyze": "cross-env ANALYZE=true pnpm run build"
 	},
 	"dependencies": {
+		"@azure/functions": "^4.7.0",
 		"@cassiozen/usestatemachine": "^1.0.1",
 		"@next/bundle-analyzer": "^15.2.2",
 		"@payloadcms/db-postgres": "3.28.1",
