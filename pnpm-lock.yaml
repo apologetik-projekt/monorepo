@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@payloadcms/db-postgres':
-        specifier: 3.28.1
-        version: 3.28.1(payload@3.28.1(graphql@16.10.0))
+        specifier: 3.31.0
+        version: 3.31.0(payload@3.31.0(graphql@16.10.0))
       payload:
-        specifier: 3.28.1
-        version: 3.28.1(graphql@16.10.0)
+        specifier: 3.31.0
+        version: 3.31.0(graphql@16.10.0)
 
 packages:
 
@@ -452,18 +452,18 @@ packages:
   '@next/env@15.2.2':
     resolution: {integrity: sha512-yWgopCfA9XDR8ZH3taB5nRKtKJ1Q5fYsTOuYkzIIoS8TJ0UAUKAGF73JnGszbjk2ufAQDj6mDdgsJAFx5CLtYQ==}
 
-  '@payloadcms/db-postgres@3.28.1':
-    resolution: {integrity: sha512-HSGJJtADPsOmEC3A8QiGto/if7u03SqjVZMYUFY/OAhc6y4PabOoVcB/B+pbsqxNAD5Rob7zgYHsqcUzydfWYg==}
+  '@payloadcms/db-postgres@3.31.0':
+    resolution: {integrity: sha512-iGn+EsXCL4/igXCPFhp4fA0WElPvXHVJYSC4Ow/LAaJnDobdtdEB+aOm2k4bvsP91nZSVhxyT1lNoTDN6KHo8A==}
     peerDependencies:
-      payload: 3.28.1
+      payload: 3.31.0
 
-  '@payloadcms/drizzle@3.28.1':
-    resolution: {integrity: sha512-T+nSC+MFMYZIGT9grArTBQQtQmoqdCtPe5Rv/q19zJozUCVcDOgMd8IZfmh7mu0yBuoNf5mqCAy1zi5FbmsuHw==}
+  '@payloadcms/drizzle@3.31.0':
+    resolution: {integrity: sha512-RKi4lwjJyWQSd31zC8Hnz9b4e0bdOY0BA3unkhwGHypgNp1fDa+eDb00b1YiTAaBSytdmI5UEZHjjnVBWYfyyA==}
     peerDependencies:
-      payload: 3.28.1
+      payload: 3.31.0
 
-  '@payloadcms/translations@3.28.1':
-    resolution: {integrity: sha512-TC3CvyXl5wdvtkcTmSNUe5F2rjYPMtLIc3l27JEpuuKvqUE8B5rSt99cov3I3yaQwvsLZDW+8098rrmAqjFyUQ==}
+  '@payloadcms/translations@3.31.0':
+    resolution: {integrity: sha512-vjbBuHJUZ04R7wkOR1+QhZRO1xG7bvkLgx6zoiKZZmvItqiPA5ZWsyrq3NFhviOH26dH2tOdnO+RLPuaElkWFg==}
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -779,8 +779,8 @@ packages:
   path-to-regexp@6.3.0:
     resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
-  payload@3.28.1:
-    resolution: {integrity: sha512-wTR/QfImkOuVkSbudRKQjBj7hS5ZUH2b+nk/ZmShCz8jXGg5YyDumg0QtRHXDi0PrYONMhSihYdhWhHEkNXRAw==}
+  payload@3.31.0:
+    resolution: {integrity: sha512-rPP4n8yHa7FGh1uCcdx0nng1i71cPUetsiyVK0ntt/IIx0+iwfk9qcEreDboNe5CxZuIozjAt42R70kGYlVStw==}
     engines: {node: ^18.20.2 || >=20.9.0}
     hasBin: true
     peerDependencies:
@@ -1274,14 +1274,14 @@ snapshots:
 
   '@next/env@15.2.2': {}
 
-  '@payloadcms/db-postgres@3.28.1(payload@3.28.1(graphql@16.10.0))':
+  '@payloadcms/db-postgres@3.31.0(payload@3.31.0(graphql@16.10.0))':
     dependencies:
-      '@payloadcms/drizzle': 3.28.1(@types/pg@8.10.2)(payload@3.28.1(graphql@16.10.0))(pg@8.11.3)
+      '@payloadcms/drizzle': 3.31.0(@types/pg@8.10.2)(payload@3.31.0(graphql@16.10.0))(pg@8.11.3)
       '@types/pg': 8.10.2
       console-table-printer: 2.12.1
       drizzle-kit: 0.28.0
       drizzle-orm: 0.36.1(@types/pg@8.10.2)(pg@8.11.3)
-      payload: 3.28.1(graphql@16.10.0)
+      payload: 3.31.0(graphql@16.10.0)
       pg: 8.11.3
       prompts: 2.4.2
       to-snake-case: 1.0.0
@@ -1317,11 +1317,11 @@ snapshots:
       - sqlite3
       - supports-color
 
-  '@payloadcms/drizzle@3.28.1(@types/pg@8.10.2)(payload@3.28.1(graphql@16.10.0))(pg@8.11.3)':
+  '@payloadcms/drizzle@3.31.0(@types/pg@8.10.2)(payload@3.31.0(graphql@16.10.0))(pg@8.11.3)':
     dependencies:
       console-table-printer: 2.12.1
       drizzle-orm: 0.36.1(@types/pg@8.10.2)(pg@8.11.3)
-      payload: 3.28.1(graphql@16.10.0)
+      payload: 3.31.0(graphql@16.10.0)
       prompts: 2.4.2
       to-snake-case: 1.0.0
       uuid: 9.0.0
@@ -1356,7 +1356,7 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@payloadcms/translations@3.28.1':
+  '@payloadcms/translations@3.31.0':
     dependencies:
       date-fns: 4.1.0
 
@@ -1619,10 +1619,10 @@ snapshots:
 
   path-to-regexp@6.3.0: {}
 
-  payload@3.28.1(graphql@16.10.0):
+  payload@3.31.0(graphql@16.10.0):
     dependencies:
       '@next/env': 15.2.2
-      '@payloadcms/translations': 3.28.1
+      '@payloadcms/translations': 3.31.0
       '@types/busboy': 1.5.4
       ajv: 8.17.1
       bson-objectid: 2.0.4
@@ -1866,7 +1866,7 @@ snapshots:
   tsx@4.19.2:
     dependencies:
       esbuild: 0.23.1
-      get-tsconfig: 4.8.1
+      get-tsconfig: 4.10.0
     optionalDependencies:
       fsevents: 2.3.3
 
