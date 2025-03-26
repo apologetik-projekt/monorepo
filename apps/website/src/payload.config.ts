@@ -78,6 +78,16 @@ export default buildConfig({
 	i18n: {
 		fallbackLanguage: 'de',
 		supportedLanguages: { de, en },
+		translations: {
+			de: {
+				general: {
+					livePreview: 'Live-Vorschau',
+				},
+				fields: {
+					addNew: 'Neuen Eintrag hinzufügen',
+				},
+			},
+		},
 	},
 	email: process.env.NODE_ENV == 'production' ? nodeMailer : () => consoleMailer,
 	secret: process.env.PAYLOAD_SECRET || '',
