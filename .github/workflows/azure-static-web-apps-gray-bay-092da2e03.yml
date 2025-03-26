@@ -17,6 +17,7 @@ env:
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
   AZURE_DYNAMIC_PREVIEW_URL: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
+  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
 
 jobs:
   build_and_deploy_job:
