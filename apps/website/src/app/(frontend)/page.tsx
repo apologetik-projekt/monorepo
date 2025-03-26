@@ -5,6 +5,9 @@ import Link from 'next/link'
 import HeroImage from '../../../public/hero.jpg'
 import BibleImage from '../../../public/bible.webp'
 
+export const dynamic = 'force-static'
+export const revalidate = 60
+
 export { generateMetadata }
 
 export default function Index() {
@@ -19,7 +22,7 @@ export default function Index() {
 				}}
 			/>
 			<div className="[&_.prose]:prose-lg">
-				<Page params={Promise.resolve({ slug: 'home' })} />
+				<Page params={Promise.resolve({ slug: 'home', index: true })} />
 			</div>
 			<section style={{ fontSize: 18 }} className="max-w-2xl mx-auto -mb-10 sm:mb-10 px-5 md:px-2">
 				<Cards />

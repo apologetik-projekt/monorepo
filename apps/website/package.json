@@ -40,7 +40,7 @@
 		"clsx": "^2.1.1",
 		"cross-env": "^7.0.3",
 		"graphql": "^16.8.1",
-		"iframe-resizer-react": "^1.0.0",
+		"iframe-resizer-react": "1.0.12",
 		"isbot": "^5.1.21",
 		"jsonwebtoken": "^9.0.2",
 		"masonry-pf": "^1.0.0",
