@@ -97,7 +97,7 @@ export default async function Article({ params: paramsPromise }: Args) {
 			<div className="my-3 -mx-4 md:m-4 md:mb-6" style={{ viewTransitionName: `image-${slug}` }}>
 				<Image
 					className="object-cover bg-black origin-center w-full aspect-video"
-					src={(typeof article.coverImage == 'object' && article.coverImage.url) || ''}
+					src={(typeof article.coverImage == 'object' && article.coverImage?.url) || ''}
 					alt="Image"
 					width={400}
 					height={225}
@@ -119,7 +119,7 @@ export default async function Article({ params: paramsPromise }: Args) {
 					href="https://api.fonts.coollabs.io/css2?family=Noticia+Text&display=swap"
 				/>
 				<RichText className="break-words" data={article.content!} />
-				{article.appendix!.root.children.length > 1 && (
+				{article.appendix && article.appendix.root.children.length > 1 && (
 					<RichText className="break-words" data={article.appendix!} />
 				)}
 			</section>
