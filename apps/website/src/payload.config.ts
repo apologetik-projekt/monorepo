@@ -17,7 +17,7 @@ import seoPlugin from '@/plugins/seo'
 import formBuilderPlugin from '@/plugins/formBuilder'
 import redirectPlugin from '@/plugins/redirects'
 import azureBlobStoragePlugin from '@/plugins/azureBlobStorage'
-import { consoleMailer, nodeMailer } from './plugins/emailAdapter'
+import { nodeMailer } from './plugins/emailAdapter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -89,7 +89,7 @@ export default buildConfig({
 			},
 		},
 	},
-	email: process.env.NODE_ENV == 'production' ? nodeMailer : () => consoleMailer,
+	email: nodeMailer,
 	secret: process.env.PAYLOAD_SECRET || '',
 	telemetry: false,
 })
