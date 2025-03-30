@@ -16,7 +16,8 @@ env:
   NODE_ENV: production
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
+  AZURE_PREVIEW_DEPLOYMENT_URL: 'https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net'
+  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL || AZURE_PREVIEW_DEPLOYMENT_URL }}
 
 jobs:
   build:
@@ -66,20 +67,10 @@ jobs:
     name: Deploy
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ steps.setup.outputs.DEPLOYMENT_URL }}
+      url: ${{ env.NEXT_PUBLIC_SERVER_URL }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
-      - name: Initialize Environment URL
-        id: setup
-        run: |
-          if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
-            DEPLOYMENT_URL=https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
-            echo "NEXT_PUBLIC_SERVER_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
-            echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
-          else
-            echo "DEPLOYMENT_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> $GITHUB_OUTPUT
-          fi
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
