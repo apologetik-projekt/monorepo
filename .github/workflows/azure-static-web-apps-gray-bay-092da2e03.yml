@@ -57,13 +57,12 @@ jobs:
       - name: Build
         working-directory: ./apps/website
         run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/cache@v4
+        name: Cache build
+        id: workflow-cache
         with:
-          name: website-build
-          path: apps/website
-          include-hidden-files: true
-          retention-days: 1
+          path: ./*
+          key: ${{ github.sha }}
 
   deploy:
     needs: build
@@ -75,11 +74,12 @@ jobs:
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/cache@v4
+        name: Use cache
+        id: workflow-cache
         with:
-          name: website-build
-          path: apps/website
+          path: ./*
+          key: ${{ github.sha }}
       - name: Set dynamic server url
         if: github.event_name == 'pull_request'
         run: echo "NEXT_PUBLIC_SERVER_URL=https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net" >> $GITHUB_ENV
@@ -100,6 +100,8 @@ jobs:
           skip_deploy_on_missing_secrets: true
           NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
+      - name: Cleanup workflow cache
+        run: gh clean cache ${{ github.sha }}
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
