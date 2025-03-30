@@ -64,7 +64,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     name: Deploy
-    if: ${{ !env.ACT || env.DEPLOY == 'true' }}
+    if: env.DEPLOY == 'true' || !env.ACT
     environment: 
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
       url: ${{ steps.setup.outputs.DEPLOYMENT_URL }}
