@@ -80,6 +80,9 @@ jobs:
         with:
           name: website-build
           path: apps/website
+      - name: Set dynamic server url
+        if: github.event_name == 'pull_request'
+        run: echo "NEXT_PUBLIC_SERVER_URL=https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net" >> $GITHUB_ENV
       - name: Deploy
         id: deploy
         if: ${{ !env.ACT || env.DEPLOY == 'true' }}
