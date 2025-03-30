@@ -1,17 +1,7 @@
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
-export const consoleMailer = {
-	defaultFromAddress: 'noreply@test.com',
-	defaultFromName: 'System',
-	name: 'nodemailer',
-	sendEmail: async (message: unknown) => {
-		console.log(message)
-		return Promise.resolve()
-	},
-}
-
 export const nodeMailer = nodemailerAdapter({
-	skipVerify: true,
+	skipVerify: process.env.SMTP_SKIP_VERIFY == 'true',
 	defaultFromAddress: 'DoNotReply@apologetik-projekt.de',
 	defaultFromName: 'Apologetik Projekt',
 	transportOptions: {
