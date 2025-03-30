@@ -1,7 +1,7 @@
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 export const nodeMailer = nodemailerAdapter({
-	skipVerify: true, //process.env.SMTP_SKIP_VERIFY == 'true',
+	skipVerify: process.env.SMTP_SKIP_VERIFY == 'true',
 	defaultFromAddress: 'DoNotReply@apologetik-projekt.de',
 	defaultFromName: 'Apologetik Projekt',
 	transportOptions: {
