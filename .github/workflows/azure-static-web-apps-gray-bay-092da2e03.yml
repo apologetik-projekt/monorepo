@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set dynamic server url
         if: github.event_name == 'pull_request'
-        run: echo "https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net" >> $GITHUB_ENV
+        run: echo "NEXT_PUBLIC_SERVER_URL=https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net" >> $GITHUB_ENV
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v3
         with:
