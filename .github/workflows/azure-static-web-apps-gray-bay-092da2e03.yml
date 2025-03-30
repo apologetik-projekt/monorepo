@@ -16,8 +16,7 @@ env:
   NODE_ENV: production
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-  AZURE_PREVIEW_URL: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
-  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL || env.AZURE_PREVIEW_URL }}
+  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
   SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
 
 jobs:
@@ -30,6 +29,9 @@ jobs:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
+      - name: Set dynamic server url
+        if: !env.NEXT_PUBLIC_SERVER_URL
+        run: echo "https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net" >> $GITHUB_ENV
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v3
         with:
