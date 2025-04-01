@@ -1,6 +1,8 @@
 name: Azure Static Web Apps CI/CD
-
-permissions: read-all
+permissions: 
+  actions: write
+  pull-requests: read
+  security-events: read
 
 on:
   push:
@@ -14,33 +16,26 @@ env:
   NODE_VERSION: 20.19.0 # Check support on azure before updating
   PNPM_VERSION: 10.6.3
   NODE_ENV: production
+  GH_TOKEN: ${{ github.token }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-  AZURE_DYNAMIC_PREVIEW_URL: https://gray-bay-092da2e03-${{github.event.number}}.westeurope.6.azurestaticapps.net
+  AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
   NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
   SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  build:
+    if: (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')) && github.events.pull_request.draft == false
     runs-on: ubuntu-latest
-    name: Build and Deploy
-    environment: 
-      name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
-      url: ${{ steps.setup.outputs.DEPLOYMENT_URL }}
+    name: Build
+    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
     env:
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
-      - name: Initialize Environment
-        id: setup
-        run: |
-          if [[ -z "${{ env.NEXT_PUBLIC_SERVER_URL }}" ]]; then
-            echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_ENV
-            echo "DEPLOYMENT_URL=${{ env.AZURE_DYNAMIC_PREVIEW_URL }}" >> $GITHUB_OUTPUT
-          else
-            echo "DEPLOYMENT_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" >> $GITHUB_OUTPUT
-          fi
+      - name: Set dynamic server url
+        if: github.event_name == 'pull_request'
+        run: echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DEPLOYMENT_URL }}" >> $GITHUB_ENV
       - name: Use pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v3
         with:
@@ -66,12 +61,38 @@ jobs:
       - name: Build
         working-directory: ./apps/website
         run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
+      - uses: actions/cache@v4
+        name: Cache build
+        id: workflow-cache
+        with:
+          path: ./*
+          key: ${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    environment: 
+      name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
+      url: ${{ env.NEXT_PUBLIC_SERVER_URL }}
+    env:
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
+    steps:
+      - uses: actions/cache@v4
+        name: Use cache
+        id: workflow-cache
+        with:
+          path: ./*
+          key: ${{ github.sha }}
+      - name: Set dynamic server url
+        if: github.event_name == 'pull_request'
+        run: echo "NEXT_PUBLIC_SERVER_URL=${{ env.AZURE_DEPLOYMENT_URL }}" >> $GITHUB_ENV
       - name: Deploy
         id: deploy
         if: ${{ !env.ACT || env.DEPLOY == 'true' }}
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_BAY_092DA2E03 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_ROCK_0009D2403 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: "master"
           action: "upload"
@@ -81,10 +102,14 @@ jobs:
           api_build_command: "rm -rf ./node_modules/@next/swc-*"
         env:
           skip_deploy_on_missing_secrets: true
+          SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
           NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
+      - name: Cleanup workflow cache
+        if: always()
+        run: gh cache delete ${{ github.sha }}
 
-  close_pull_request_job:
+  close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
@@ -93,5 +118,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_BAY_092DA2E03 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_ROCK_0009D2403 }}
           action: "close"
