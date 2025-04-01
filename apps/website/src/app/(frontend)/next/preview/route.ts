@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import { draftMode } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { CollectionSlug } from 'payload'
@@ -101,8 +100,6 @@ export async function GET(
 
 		const res = NextResponse.redirect(getServerSideURL() + path)
 		res.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
-		res.headers.set('Pragma', 'no-cache')
-		res.headers.set('Expires', '0')
 		return res
 	}
 }

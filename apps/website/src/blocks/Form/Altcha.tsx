@@ -1,6 +1,7 @@
 'use client'
 import { Style } from '@/components/styles'
 import dynamic from 'next/dynamic'
+import type { ComponentProps } from 'react'
 
 const localizedText = {
 	ariaLinkLabel: 'Besuche Altcha.org',
@@ -17,7 +18,7 @@ const localizedText = {
 const Fallback = () => <div className="h-[49px] border border-gray-200" />
 const AltchaWidget = dynamic(() => import('./AltchaWidget'), { ssr: false, loading: Fallback })
 
-export default function Altcha(props: JSX.AltchaWidgetReact) {
+export default function Altcha(props: ComponentProps<typeof AltchaWidget>) {
 	return (
 		<div className="min-h-12">
 			<Style href="Altcha">
