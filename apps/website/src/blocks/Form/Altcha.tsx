@@ -66,7 +66,7 @@ export default function Altcha(props: ComponentProps<typeof AltchaWidget>) {
 					'--altcha-color-border': '#e8e8e8',
 					...props.style,
 				}}
-				onstatechange={(e) => {
+				onstatechange={(e: CustomEvent<any>) => {
 					if (typeof props.onstatechange == 'function') props.onstatechange(e)
 					const widget = e.target as HTMLDivElement
 					const checkbox = widget.getElementsByTagName('input')[0]
