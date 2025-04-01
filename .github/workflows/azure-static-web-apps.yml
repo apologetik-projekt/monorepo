@@ -13,6 +13,7 @@ env:
   NODE_VERSION: 20.19.0 # Check support on azure before updating
   PNPM_VERSION: 10.6.3
   NODE_ENV: production
+  GH_TOKEN: ${{ github.token }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
   AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
