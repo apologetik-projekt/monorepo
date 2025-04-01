@@ -1,6 +1,7 @@
 'use client'
 import { Style } from '@/components/styles'
 import dynamic from 'next/dynamic'
+import type { ComponentProps } from 'react'
 
 const localizedText = {
 	ariaLinkLabel: 'Besuche Altcha.org',
@@ -17,7 +18,7 @@ const localizedText = {
 const Fallback = () => <div className="h-[49px] border border-gray-200" />
 const AltchaWidget = dynamic(() => import('./AltchaWidget'), { ssr: false, loading: Fallback })
 
-export default function Altcha(props: JSX.AltchaWidgetReact) {
+export default function Altcha(props: ComponentProps<typeof AltchaWidget>) {
 	return (
 		<div className="min-h-12">
 			<Style href="Altcha">
@@ -65,7 +66,7 @@ export default function Altcha(props: JSX.AltchaWidgetReact) {
 					'--altcha-color-border': '#e8e8e8',
 					...props.style,
 				}}
-				onstatechange={(e) => {
+				onstatechange={(e: CustomEvent<any>) => {
 					if (typeof props.onstatechange == 'function') props.onstatechange(e)
 					const widget = e.target as HTMLDivElement
 					const checkbox = widget.getElementsByTagName('input')[0]
