@@ -105,6 +105,15 @@ jobs:
           SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
           NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+          SMTP_HOST: ${{ env.SMTP_HOST }}
+          SMTP_PORT: ${{ env.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          AZURE_STORAGE_ACCOUNT_BASEURL: ${{ secrets.AZURE_STORAGE_ACCOUNT_BASEURL }}
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          AZURE_STORAGE_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}
       - name: Cleanup workflow cache
         if: always()
         run: gh cache delete ${{ github.sha }}
