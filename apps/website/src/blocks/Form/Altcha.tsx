@@ -18,7 +18,7 @@ const localizedText = {
 const Fallback = () => <div className="h-[49px] border border-gray-200" />
 const AltchaWidget = dynamic(() => import('./AltchaWidget'), { ssr: false, loading: Fallback })
 
-export default function Altcha(props: ComponentProps<typeof AltchaWidget>) {
+export default function Altcha(props: JSX.AltchaWidgetReact) {
 	return (
 		<div className="min-h-12">
 			<Style href="Altcha">
