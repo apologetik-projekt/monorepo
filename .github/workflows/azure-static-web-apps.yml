@@ -20,7 +20,7 @@ env:
 
 jobs:
   build:
-    if: (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')) && github.events.pull_request.draft != false
+    if: (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')) && github.events.pull_request.draft == false
     runs-on: ubuntu-latest
     name: Build
     environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
