@@ -102,6 +102,7 @@ jobs:
           api_build_command: "rm -rf ./node_modules/@next/swc-*"
         env:
           skip_deploy_on_missing_secrets: true
+          SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
           NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
       - name: Cleanup workflow cache
