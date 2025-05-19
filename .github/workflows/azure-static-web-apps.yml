@@ -116,7 +116,6 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           allow-no-subscriptions: true
-          auth-type: oidc
       - name: Configure runtime app settings
         uses: azure/cli@v1
         with:
