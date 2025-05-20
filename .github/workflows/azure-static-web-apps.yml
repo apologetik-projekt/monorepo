@@ -122,10 +122,10 @@ jobs:
         with:
           inlineScript: |
             if [ "${GITHUB_REF_NAME}" = "master" ]; then ENV="production"; else ENV="${GITHUB_REF_NAME}"; fi
-      
+            
             az staticwebapp appsettings set \
-              --name website \
-              --environment-name "$ENV" \
+              --name "website" \
+              --environment-name "7" \
               --setting-names \
                   "SMTP_HOST=${{ env.SMTP_HOST }}" \
                   "SMTP_PORT=${{ env.SMTP_PORT }}" \
