@@ -127,8 +127,8 @@ jobs:
               --name "website" \
               --environment-name "$ENV" \
               --setting-names \
-                  "SMTP_HOST=${{ env.SMTP_HOST }}" \
-                  "SMTP_PORT=${{ env.SMTP_PORT }}" \
+                  "SMTP_HOST=${{ vars.SMTP_HOST }}" \
+                  "SMTP_PORT=${{ vars.SMTP_PORT }}" \
                   "SMTP_USER=${{ secrets.SMTP_USER }}" \
                   "SMTP_PASS=${{ secrets.SMTP_PASS }}" \
                   "DATABASE_URI=${{ secrets.DATABASE_URI }}" \
