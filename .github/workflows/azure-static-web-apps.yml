@@ -101,7 +101,7 @@ jobs:
           skip_api_build: true
           app_location: "./apps/website"
           api_build_command: "rm -rf ./node_modules/@next/swc-*"
-          deployment_environment: ${{ env.GITHUB_REF_NAME }}
+          #deployment_environment: ${{ env.GITHUB_REF_NAME }}
         env:
           skip_deploy_on_missing_secrets: true
           SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
@@ -121,11 +121,11 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-            if [ "${GITHUB_REF_NAME}" = "master" ]; then ENV="production"; else ENV="${GITHUB_REF_NAME}"; fi
+            if [ "${GITHUB_REF_NAME}" = "master" ]; then ENV="production"; else ENV="${{ github.event.number }}"; fi
             
             az staticwebapp appsettings set \
               --name "website" \
-              --environment-name "7" \
+              --environment-name "$ENV" \
               --setting-names \
                   "SMTP_HOST=${{ env.SMTP_HOST }}" \
                   "SMTP_PORT=${{ env.SMTP_PORT }}" \
