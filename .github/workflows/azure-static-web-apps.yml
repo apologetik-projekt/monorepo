@@ -122,20 +122,16 @@ jobs:
         with:
           inlineScript: |
             if [ "${GITHUB_REF_NAME}" = "master" ]; then ENV="production"; else ENV="${GITHUB_REF_NAME}"; fi
-            cat <<EOF > appsettings.json
-            {
-              "SMTP_HOST": "${{ env.SMTP_HOST }}",
-              "SMTP_PORT": "${{ env.SMTP_PORT }}",
-              "SMTP_USER": "${{ secrets.SMTP_USER }}",
-              "SMTP_PASS": "${{ secrets.SMTP_PASS }}",
-              "DATABASE_URI": "${{ secrets.DATABASE_URI }}"
-            }
-            EOF
       
             az staticwebapp appsettings set \
               --name website \
               --environment-name "$ENV" \
-              --settings @appsettings.json \
+              --setting-names \
+                  "SMTP_HOST=${{ env.SMTP_HOST }}" \
+                  "SMTP_PORT=${{ env.SMTP_PORT }}" \
+                  "SMTP_USER=${{ secrets.SMTP_USER }}" \
+                  "SMTP_PASS=${{ secrets.SMTP_PASS }}" \
+                  "DATABASE_URI=${{ secrets.DATABASE_URI }}" \
               --only-show-errors
         env:
           AZURE_CLIENT_ID:  ${{ secrets.AZURE_CLIENT_ID }}
