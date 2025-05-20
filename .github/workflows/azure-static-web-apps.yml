@@ -3,6 +3,7 @@ permissions:
   actions: write
   pull-requests: read
   security-events: read
+  id-token: write
 
 on:
   push:
