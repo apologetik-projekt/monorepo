@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'; // Added waitFor
 import '@testing-library/jest-dom'; 
 import AnalyticsChart from './AnalyticsChart';
 
-// Mock @visx/xychart and other @visx dependencies
-// It's good practice to mock these to avoid rendering complex SVGs in unit tests
-// and to prevent errors if these components have complex internal logic not relevant to this component's test.
+// Mock @visx/xychart components
 jest.mock('@visx/xychart', () => ({
   XYChart: ({ children }) => <div data-testid="xychart">{children}</div>,
   AnimatedAxis: ({ orientation, label }) => <div data-testid={`animated-axis-${orientation}`}>{label}</div>,
@@ -14,85 +12,147 @@ jest.mock('@visx/xychart', () => ({
   Tooltip: () => <div data-testid="tooltip" />,
 }));
 
-// The actual data generation logic is complex and involves Date objects.
-// For these tests, we are more interested in whether the component attempts to update
-// data based on timeRange, which is signaled by console.log.
-// We don't need to mock genDateValue as it's no longer directly used;
-// the data generation is now internal to AnalyticsChart's useEffect.
-
-describe('AnalyticsChart Component', () => {
-  let consoleSpy;
-
+describe('AnalyticsChart Component with Plausible API', () => {
   beforeEach(() => {
-    // Spy on console.log before each test
-    consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    // Mock global.fetch and provide a default successful empty response
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ meta: { time_labels: [] }, results: [] }),
+        text: () => Promise.resolve(''), // Added for error responses that might call .text()
+      })
+    );
   });
 
   afterEach(() => {
-    // Restore console.log after each test
-    consoleSpy.mockRestore();
+    // Clear the fetch mock after each test
+    fetch.mockClear();
+    jest.restoreAllMocks(); // Restore any other mocks, e.g. console if spied
   });
 
-  test('renders correctly with default time range "This Month"', () => {
+  test('renders loading state and then "No data available..." for default range', async () => {
     render(<AnalyticsChart />);
     
     const selectElement = screen.getByLabelText(/select time range/i);
     expect(selectElement).toBeInTheDocument();
     expect(selectElement).toHaveValue('month'); // Default value
     
-    // Check for chart presence by its mock
+    // Initially, "Loading..." should be shown
+    expect(screen.getByText(/loading chart data.../i)).toBeInTheDocument();
+
+    // Wait for the initial fetch to complete (mocked to return empty data)
+    await waitFor(() => {
+      expect(screen.getByText(/no data available for the selected range/i)).toBeInTheDocument();
+    });
+
+    // Check that fetch was called for the initial 'month' load
+    expect(fetch).toHaveBeenCalledWith(
+      'https://anna.apologetik-projekt.de/api/v2/query',
+      expect.objectContaining({
+        method: 'POST',
+        body: expect.stringContaining('"date_range":"month"'),
+      })
+    );
+    // Check for mocked chart elements (even if no data, chart structure might render)
     expect(screen.getByTestId('xychart')).toBeInTheDocument();
-    // Check for initial console log indicating data fetch for 'month'
-    expect(consoleSpy).toHaveBeenCalledWith('Updating chart data for time range:', 'month');
   });
 
-  test('allows changing time range selection', () => {
+  test('fetches and processes data when time range changes to "today"', async () => {
+    // Mock for the initial 'month' load (can be empty as it's not the focus of this test)
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ meta: { time_labels: [] }, results: [] }),
+      text: async () => '',
+    });
     render(<AnalyticsChart />);
     
     const selectElement = screen.getByLabelText(/select time range/i);
+
+    // Mock for the "today" selection
+    const todayData = {
+      meta: { time_labels: ["2023-01-02T08:00:00", "2023-01-02T09:00:00"] },
+      results: [
+        { dimensions: ["2023-01-02T08:00:00"], metrics: [5] },
+        { dimensions: ["2023-01-02T09:00:00"], metrics: [8] },
+      ]
+    };
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => todayData,
+      text: async () => '',
+    });
     
     fireEvent.change(selectElement, { target: { value: 'today' } });
     expect(selectElement).toHaveValue('today');
-    
-    fireEvent.change(selectElement, { target: { value: 'week' } });
-    expect(selectElement).toHaveValue('week');
+
+    // Wait for loading to finish and UI to update
+    await waitFor(() => {
+      // Check fetch call for "today"
+      expect(fetch).toHaveBeenCalledWith(
+        'https://anna.apologetik-projekt.de/api/v2/query',
+        expect.objectContaining({
+          method: 'POST',
+          body: expect.stringContaining('"date_range":"day"'), // For "today"
+        })
+      );
+      // Check if the Y-axis label is "Visitors" (it should always be this now)
+      expect(screen.getByTestId('animated-axis-left')).toHaveTextContent('Visitors');
+      // Check if the bottom axis label updates to "Today"
+      expect(screen.getByTestId('animated-axis-bottom')).toHaveTextContent('Today');
+    });
+     // Example: Check if the chart component is rendered (even if data points aren't specifically checked)
+    expect(screen.getByTestId('xychart')).toBeInTheDocument();
+    expect(screen.queryByText(/loading chart data.../i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/no data available for the selected range/i)).not.toBeInTheDocument();
+
   });
 
-  test('updates chart data indication when time range changes', () => {
+  test('displays an error message if API call fails', async () => {
+    // Mock for initial load (can be empty)
+     fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ meta: { time_labels: [] }, results: [] }),
+      text: async () => '',
+    });
     render(<AnalyticsChart />);
-    
-    const selectElement = screen.getByLabelText(/select time range/i);
-    
-    // Initial load for 'month' (already spied in beforeEach and asserted in the first test,
-    // but we clear and check again for explicit flow per test)
-    expect(consoleSpy).toHaveBeenCalledWith('Updating chart data for time range:', 'month');
-    
-    consoleSpy.mockClear(); 
-    fireEvent.change(selectElement, { target: { value: 'today' } });
-    expect(selectElement).toHaveValue('today');
-    // Check that console.log was called for 'today'
-    expect(consoleSpy).toHaveBeenCalledWith('Updating chart data for time range:', 'today');
 
-    consoleSpy.mockClear();
+    // Mock fetch to return an error
+    fetch.mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      text: async () => 'Internal Server Error', // Or json: async () => ({ message: ... })
+    });
+
+    const selectElement = screen.getByLabelText(/select time range/i);
+    // Change selection to trigger a new fetch
     fireEvent.change(selectElement, { target: { value: 'week' } });
-    expect(selectElement).toHaveValue('week');
-    // Check that console.log was called for 'week'
-    expect(consoleSpy).toHaveBeenCalledWith('Updating chart data for time range:', 'week');
+
+    // Wait for the error message to appear
+    expect(await screen.findByText(/failed to fetch data: 500/i)).toBeInTheDocument();
+    expect(screen.getByText(/please check the console for more details/i)).toBeInTheDocument();
+    
+    // Ensure chart is not shown
+    expect(screen.queryByTestId('xychart')).not.toBeInTheDocument();
   });
 
-  test('renders axis labels based on props', () => {
+  test('handles authentication error from API', async () => {
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ meta: { time_labels: [] }, results: [] }),
+      text: async () => '',
+    });
     render(<AnalyticsChart />);
-    // Default is 'month'
-    expect(screen.getByTestId('animated-axis-bottom')).toHaveTextContent('Month');
-    expect(screen.getByTestId('animated-axis-left')).toHaveTextContent('Views/Clicks');
-
-    // Change to 'today'
+  
+    fetch.mockResolvedValueOnce({
+      ok: false,
+      status: 401, // Simulate authentication error
+      text: async () => 'Unauthorized',
+    });
+  
     const selectElement = screen.getByLabelText(/select time range/i);
-    fireEvent.change(selectElement, { target: { value: 'today' } });
-    expect(screen.getByTestId('animated-axis-bottom')).toHaveTextContent('Today');
-    
-    // Change to 'week'
     fireEvent.change(selectElement, { target: { value: 'week' } });
-    expect(screen.getByTestId('animated-axis-bottom')).toHaveTextContent('Week');
+  
+    expect(await screen.findByText(/failed to fetch data: 401/i)).toBeInTheDocument();
+    expect(await screen.findByText(/authentication failed/i)).toBeInTheDocument();
   });
 });
