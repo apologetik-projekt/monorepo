@@ -32,6 +32,7 @@ jobs:
     env:
       SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
       - name: Set dynamic server url
