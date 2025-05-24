@@ -47,6 +47,7 @@ export default withSentryConfig(
 	{
 		org: 'krause-x0',
 		project: 'javascript-nextjs',
+		authToken: process.env.SENTRY_AUTH_TOKEN,
 		silent: !process.env.CI,
 		widenClientFileUpload: true,
 		tunnelRoute: '/monitoring',

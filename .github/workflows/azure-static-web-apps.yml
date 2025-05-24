@@ -23,6 +23,7 @@ env:
   AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
   NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
   SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 jobs:
   build:
