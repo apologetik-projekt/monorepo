@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { type PayloadRequest } from 'payload'
 import { Analytics } from './Analytics'
 import { cookies, headers } from 'next/headers'
+import AnalyticsChart from './AnalyticsChart'; // Added import
 
 const columns = [
   {
@@ -125,6 +126,9 @@ export default async function Dashboard(req: PayloadRequest) {
           </Button>
         </Link>
       </header>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}> {/* Added a wrapper div for spacing */}
+        <AnalyticsChart /> {/* Added the analytics chart */}
+      </div>
       <Analytics theme={theme} />
     </Gutter>
   )
