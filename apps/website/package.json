@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@azure/functions": "^4.7.0",
 		"@cassiozen/usestatemachine": "^1.0.1",
-		"@next/bundle-analyzer": "^15.2.2",
+		"@next/bundle-analyzer": "^15.3.2",
 		"@payloadcms/db-postgres": "3.39.1",
 		"@payloadcms/email-nodemailer": "3.39.1",
 		"@payloadcms/live-preview-react": "3.39.1",
@@ -37,7 +37,7 @@
 		"@tailwindcss/postcss": "^4.0.0",
 		"@tailwindcss/typography": "^0.5.16",
 		"@types/jsonwebtoken": "^9.0.9",
-		"altcha": "^1.2.0",
+		"altcha": "^1.5.0",
 		"altcha-lib": "^1.2.0",
 		"clsx": "^2.1.1",
 		"cross-env": "^7.0.3",
@@ -48,28 +48,28 @@
 		"masonry-pf": "^1.0.0",
 		"motion": "^12.0.3",
 		"nanoid": "^5.0.9",
-		"next": "^15.2.1",
+		"next": "^15.3.2",
 		"next-sitemap": "^4.2.3",
 		"next-view-transitions": "^0.3.4",
 		"payload": "3.39.1",
 		"payload-admin-bar": "^1.0.7",
 		"postcss": "^8.5.1",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
 		"sharp": "^0.33.5",
-		"tailwindcss": "^4.0.0"
+		"tailwindcss": "^4.1.6"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.2.0",
 		"@types/node": "^22.5.4",
-		"@types/react": "^19.0.0",
-		"@types/react-dom": "^19.0.0",
+		"@types/react": "^19.1.0",
+		"@types/react-dom": "^19.1.0",
 		"eslint": "^9.16.0",
-		"eslint-config-next": "^15.1.0",
+		"eslint-config-next": "^15.3.0",
 		"prettier": "^3.4.2",
-		"typescript": "^5.7.2"
+		"typescript": "^5.8.0"
 	},
 	"engines": {
-		"node": ">=20.9.0 <21.0.0"
+		"node": ">=20.9.0 <=24.0.0"
 	}
 }
