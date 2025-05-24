@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { XYChart, AnimatedAxis, AnimatedGrid, LineSeries, Tooltip } from '@visx/xychart';
+import { XYChart, AnimatedAxis, AnimatedGrid, AreaSeries, Tooltip } from '@visx/xychart'; // Replaced LineSeries with AreaSeries
 
 interface DataPoint { x: Date; y: number; }
 const getX = (d: DataPoint) => d.x;
@@ -22,8 +22,8 @@ const AnalyticsChart: React.FC = () => {
   const cardStyle: React.CSSProperties = {
     padding: '20px',
     border: '1px solid #e0e0e0',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    borderRadius: '3px', // Updated borderRadius
+    boxShadow: '0 1px 2px rgba(0,0,0,0.03)', // Updated boxShadow
     backgroundColor: '#ffffff',
     marginTop: '20px',
   };
@@ -32,7 +32,15 @@ const AnalyticsChart: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      setChartData([]); // Clear previous data
+      // setChartData([]); // Keep old data while loading new
+
+      const plausibleApiKey = process.env.PLAUSIBLE_API_KEY;
+
+      if (!plausibleApiKey) {
+        setError("PLAUSIBLE_API_KEY is not configured. Please set the environment variable.");
+        setLoading(false);
+        return;
+      }
 
       let queryBody: any = {
         site_id: "apologetik-projekt.de",
@@ -55,7 +63,10 @@ const AnalyticsChart: React.FC = () => {
         console.log('Fetching Plausible data with query:', JSON.stringify(queryBody, null, 2));
         const response = await fetch('https://anna.apologetik-projekt.de/api/v2/query', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${plausibleApiKey}`,
+          },
           body: JSON.stringify(queryBody),
         });
 
@@ -64,12 +75,12 @@ const AnalyticsChart: React.FC = () => {
           console.error('Plausible API Error:', response.status, errorText);
           let errorMessage = `Failed to fetch data: ${response.status}.`;
           if (response.status === 401 || response.status === 403) {
-            errorMessage += " Authentication failed. An API key might be required or permissions are insufficient.";
+            errorMessage += " Authentication failed. Check your API key or permissions.";
           } else {
             errorMessage += " Please check the console for more details.";
           }
           setError(errorMessage);
-          setChartData([]);
+          // Do not clear chartData here, keep old data on error
           return;
         }
 
@@ -97,7 +108,7 @@ const AnalyticsChart: React.FC = () => {
       } catch (e: any) {
         console.error('Network or other error fetching from Plausible:', e);
         setError(`Network error: ${e.message || 'Failed to fetch data'}. See console for details.`);
-        setChartData([]);
+        // Do not clear chartData here, keep old data on error
       } finally {
         setLoading(false);
       }
@@ -109,7 +120,8 @@ const AnalyticsChart: React.FC = () => {
   return (
     <div style={cardStyle}>
       <div>
-        <label htmlFor="timeRangeSelect">Select Time Range: </label>
+        <h3 style={{ marginBottom: '15px', marginTop: '0px', fontWeight: 500 }}>Webseiten Aufrufe</h3>
+        <label htmlFor="timeRangeSelect">Zeitraum auswählen: </label>
         <select 
           id="timeRangeSelect"
           value={timeRange} 
@@ -117,15 +129,15 @@ const AnalyticsChart: React.FC = () => {
           style={{ marginBottom: '10px' }}
           disabled={loading}
         >
-          <option value="today">Today</option>
-          <option value="week">This Week</option>
-          <option value="month">This Month</option>
+          <option value="today">Heute</option>
+          <option value="week">Diese Woche</option>
+          <option value="month">Dieser Monat</option>
         </select>
 
-        {loading && <p>Loading chart data...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        {loading && <p>Lade Diagrammdaten...</p>}
+        {error && <p style={{ color: 'red' }}>Fehler: {error}</p>}
         
-        {!loading && !error && chartData.length === 0 && <p>No data available for the selected range.</p>}
+        {!loading && !error && chartData.length === 0 && <p>Keine Daten für den ausgewählten Zeitraum verfügbar.</p>}
 
         {!loading && !error && chartData.length > 0 && (
           <XYChart
@@ -134,15 +146,22 @@ const AnalyticsChart: React.FC = () => {
             yScale={{ type: 'linear' }}
             margin={{ top: 20, right: 30, bottom: 50, left: 60 }}
           >
-            <AnimatedGrid columns={false} numTicks={5} />
-            <AnimatedAxis orientation="left" numTicks={5} label="Visitors" /> {/* Updated Y-axis label */}
+            <AnimatedGrid columns={false} numTicks={5} stroke="#e0e0e0" /> {/* Made grid lines less prominent */}
+            <AnimatedAxis orientation="left" numTicks={5} /> {/* Removed Y-axis label "Visitors" */}
             <AnimatedAxis 
               orientation="bottom" 
-              label={timeRange.charAt(0).toUpperCase() + timeRange.slice(1)}
+              label="Zeitraum" // Changed label to "Zeitraum"
               numTicks={timeRange === 'today' ? 6 : (timeRange === 'week' ? 7 : 10)}
               tickFormat={(d) => getXAxisTickFormat(d as Date, timeRange)}
             />
-            <LineSeries dataKey="line-1" data={chartData} xAccessor={getX} yAccessor={getY} />
+            <AreaSeries // Replaced LineSeries with AreaSeries
+              dataKey="area-1" // Changed dataKey for clarity, can be anything unique
+              data={chartData}
+              xAccessor={getX}
+              yAccessor={getY}
+              fillOpacity={0.4} // Added fillOpacity
+              lineProps={{ stroke: '#4338ca', strokeWidth: 2 }} // Added lineProps
+            />
             <Tooltip
               snapTooltipToDatumX
               snapTooltipToDatumY
@@ -152,17 +171,17 @@ const AnalyticsChart: React.FC = () => {
                 <div style={{ padding: '5px', backgroundColor: 'white', border: '1px solid #ccc', boxShadow: '2px 2px 5px rgba(0,0,0,0.1)' }}>
                   {tooltipData?.nearestDatum?.datum && (
                     <>
-                      <div><strong>Time:</strong> {getXAxisTickFormat(getX(tooltipData.nearestDatum.datum), timeRange)}</div>
-                      <div><strong>Visitors:</strong> {getY(tooltipData.nearestDatum.datum)}</div> {/* Updated tooltip label */}
+                      <div><strong>Zeit:</strong> {getXAxisTickFormat(getX(tooltipData.nearestDatum.datum), timeRange)}</div>
+                      <div><strong>Aufrufe:</strong> {getY(tooltipData.nearestDatum.datum)}</div>
                     </>
                   )}
-                  {!tooltipData?.nearestDatum?.datum && <div>Hover over a point</div>}
+                  {!tooltipData?.nearestDatum?.datum && <div>Über einen Punkt fahren</div>}
                 </div>
               )}
             />
           </XYChart>
         )}
-        <p style={{ marginTop: '10px' }}>Selected Time Range: {timeRange}</p>
+        {/* Removed the paragraph displaying "Selected Time Range: {timeRange}" */}
       </div>
     </div>
   );

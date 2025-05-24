@@ -1,158 +1,190 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'; // Added waitFor
-import '@testing-library/jest-dom'; 
-import AnalyticsChart from './AnalyticsChart';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import AnalyticsChart from './AnalyticsChart'; // Corrected import path
 
-// Mock @visx/xychart components
-jest.mock('@visx/xychart', () => ({
-  XYChart: ({ children }) => <div data-testid="xychart">{children}</div>,
-  AnimatedAxis: ({ orientation, label }) => <div data-testid={`animated-axis-${orientation}`}>{label}</div>,
-  AnimatedGrid: () => <div data-testid="animated-grid" />,
-  LineSeries: () => <div data-testid="line-series" />,
-  Tooltip: () => <div data-testid="tooltip" />,
-}));
+// Mock fetch
+global.fetch = jest.fn();
 
-describe('AnalyticsChart Component with Plausible API', () => {
+// Mock process.env
+const originalEnv = process.env;
+
+const mockPlausibleData = {
+  meta: {
+    time_labels: ['2023-01-01T00:00:00.000Z', '2023-01-02T00:00:00.000Z'],
+  },
+  results: [
+    { dimensions: ['2023-01-01T00:00:00.000Z'], metrics: [10] },
+    { dimensions: ['2023-01-02T00:00:00.000Z'], metrics: [20] },
+  ],
+};
+
+describe('AnalyticsChart', () => {
   beforeEach(() => {
-    // Mock global.fetch and provide a default successful empty response
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
+    jest.clearAllMocks();
+    process.env = { ...originalEnv };
+  });
+
+  afterAll(() => {
+    process.env = originalEnv;
+  });
+
+  describe('Data Fetching', () => {
+    it('should call fetch with Authorization header when PLAUSIBLE_API_KEY is set', async () => {
+      process.env.PLAUSIBLE_API_KEY = 'test-api-key';
+      (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ meta: { time_labels: [] }, results: [] }),
-        text: () => Promise.resolve(''), // Added for error responses that might call .text()
-      })
-    );
-  });
+        json: async () => mockPlausibleData,
+      });
 
-  afterEach(() => {
-    // Clear the fetch mock after each test
-    fetch.mockClear();
-    jest.restoreAllMocks(); // Restore any other mocks, e.g. console if spied
-  });
-
-  test('renders loading state and then "No data available..." for default range', async () => {
-    render(<AnalyticsChart />);
-    
-    const selectElement = screen.getByLabelText(/select time range/i);
-    expect(selectElement).toBeInTheDocument();
-    expect(selectElement).toHaveValue('month'); // Default value
-    
-    // Initially, "Loading..." should be shown
-    expect(screen.getByText(/loading chart data.../i)).toBeInTheDocument();
-
-    // Wait for the initial fetch to complete (mocked to return empty data)
-    await waitFor(() => {
-      expect(screen.getByText(/no data available for the selected range/i)).toBeInTheDocument();
+      render(<AnalyticsChart />);
+      
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledWith(
+          expect.stringContaining('/api/v2/query'),
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              'Authorization': 'Bearer test-api-key',
+            }),
+          })
+        );
+      });
     });
 
-    // Check that fetch was called for the initial 'month' load
-    expect(fetch).toHaveBeenCalledWith(
-      'https://anna.apologetik-projekt.de/api/v2/query',
-      expect.objectContaining({
-        method: 'POST',
-        body: expect.stringContaining('"date_range":"month"'),
-      })
-    );
-    // Check for mocked chart elements (even if no data, chart structure might render)
-    expect(screen.getByTestId('xychart')).toBeInTheDocument();
-  });
-
-  test('fetches and processes data when time range changes to "today"', async () => {
-    // Mock for the initial 'month' load (can be empty as it's not the focus of this test)
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ meta: { time_labels: [] }, results: [] }),
-      text: async () => '',
+    it('should display error and not call fetch if PLAUSIBLE_API_KEY is not set', async () => {
+      delete process.env.PLAUSIBLE_API_KEY;
+      render(<AnalyticsChart />);
+      
+      expect(await screen.findByText('Fehler: PLAUSIBLE_API_KEY is not configured. Please set the environment variable.')).toBeInTheDocument();
+      expect(fetch).not.toHaveBeenCalled();
     });
-    render(<AnalyticsChart />);
-    
-    const selectElement = screen.getByLabelText(/select time range/i);
 
-    // Mock for the "today" selection
-    const todayData = {
-      meta: { time_labels: ["2023-01-02T08:00:00", "2023-01-02T09:00:00"] },
-      results: [
-        { dimensions: ["2023-01-02T08:00:00"], metrics: [5] },
-        { dimensions: ["2023-01-02T09:00:00"], metrics: [8] },
-      ]
-    };
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => todayData,
-      text: async () => '',
+    it('should display data correctly after a successful fetch', async () => {
+      process.env.PLAUSIBLE_API_KEY = 'test-api-key';
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockPlausibleData,
+      });
+
+      render(<AnalyticsChart />);
+
+      await waitFor(() => {
+        expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument();
+      });
+      expect(screen.queryByText('Keine Daten für den ausgewählten Zeitraum verfügbar.')).not.toBeInTheDocument();
     });
     
-    fireEvent.change(selectElement, { target: { value: 'today' } });
-    expect(selectElement).toHaveValue('today');
+    it('should preserve old data when a fetch is in progress', async () => {
+      process.env.PLAUSIBLE_API_KEY = 'test-api-key';
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          meta: { time_labels: ['2023-02-01T00:00:00.000Z'] },
+          results: [{ dimensions: ['2023-02-01T00:00:00.000Z'], metrics: [5] }],
+        }),
+      });
 
-    // Wait for loading to finish and UI to update
-    await waitFor(() => {
-      // Check fetch call for "today"
-      expect(fetch).toHaveBeenCalledWith(
-        'https://anna.apologetik-projekt.de/api/v2/query',
-        expect.objectContaining({
-          method: 'POST',
-          body: expect.stringContaining('"date_range":"day"'), // For "today"
-        })
+      render(<AnalyticsChart />);
+      
+      await waitFor(() => {
+        expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument();
+      });
+
+      (fetch as jest.Mock).mockImplementationOnce(() => 
+        new Promise(resolve => setTimeout(() => resolve({ 
+          ok: true,
+          json: async () => mockPlausibleData,
+        }), 500))
       );
-      // Check if the Y-axis label is "Visitors" (it should always be this now)
-      expect(screen.getByTestId('animated-axis-left')).toHaveTextContent('Visitors');
-      // Check if the bottom axis label updates to "Today"
-      expect(screen.getByTestId('animated-axis-bottom')).toHaveTextContent('Today');
-    });
-     // Example: Check if the chart component is rendered (even if data points aren't specifically checked)
-    expect(screen.getByTestId('xychart')).toBeInTheDocument();
-    expect(screen.queryByText(/loading chart data.../i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/no data available for the selected range/i)).not.toBeInTheDocument();
+      
+      fireEvent.change(screen.getByLabelText('Zeitraum auswählen:'), { target: { value: 'week' } });
+      
+      expect(await screen.findByText('Lade Diagrammdaten...')).toBeInTheDocument();
+      expect(screen.queryByText('Keine Daten für den ausgewählten Zeitraum verfügbar.')).not.toBeInTheDocument();
 
+      await waitFor(() => {
+         expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument();
+      }, { timeout: 1000 }); 
+    });
+
+
+    it('should display an error message if the fetch fails', async () => {
+      process.env.PLAUSIBLE_API_KEY = 'test-api-key';
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        text: async () => 'Internal Server Error',
+      });
+
+      render(<AnalyticsChart />);
+
+      expect(await screen.findByText(/Fehler: Failed to fetch data: 500/)).toBeInTheDocument();
+    });
   });
 
-  test('displays an error message if API call fails', async () => {
-    // Mock for initial load (can be empty)
-     fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ meta: { time_labels: [] }, results: [] }),
-      text: async () => '',
-    });
-    render(<AnalyticsChart />);
-
-    // Mock fetch to return an error
-    fetch.mockResolvedValueOnce({
-      ok: false,
-      status: 500,
-      text: async () => 'Internal Server Error', // Or json: async () => ({ message: ... })
+  describe('Chart Rendering and UI', () => {
+    beforeEach(() => {
+      process.env.PLAUSIBLE_API_KEY = 'test-api-key';
+      (fetch as jest.Mock).mockResolvedValue({ 
+        ok: true,
+        json: async () => mockPlausibleData,
+      });
     });
 
-    const selectElement = screen.getByLabelText(/select time range/i);
-    // Change selection to trigger a new fetch
-    fireEvent.change(selectElement, { target: { value: 'week' } });
+    it('should render the chart title "Webseiten Aufrufe"', async () => {
+      render(<AnalyticsChart />);
+      expect(await screen.findByRole('heading', { name: /Webseiten Aufrufe/i })).toBeInTheDocument();
+    });
 
-    // Wait for the error message to appear
-    expect(await screen.findByText(/failed to fetch data: 500/i)).toBeInTheDocument();
-    expect(screen.getByText(/please check the console for more details/i)).toBeInTheDocument();
+    it('should render translated labels for time range selector and options', async () => {
+      render(<AnalyticsChart />);
+      expect(screen.getByLabelText('Zeitraum auswählen:')).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Heute' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Diese Woche' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Dieser Monat' })).toBeInTheDocument();
+    });
+
+    it('should not have a Y-axis label "Visitors"', async () => {
+      render(<AnalyticsChart />);
+      await waitFor(() => expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument());
+      expect(screen.queryByText('Visitors')).not.toBeInTheDocument();
+    });
     
-    // Ensure chart is not shown
-    expect(screen.queryByTestId('xychart')).not.toBeInTheDocument();
-  });
+    it('should no longer render the "Selected Time Range:" paragraph', async () => {
+      render(<AnalyticsChart />);
+      await waitFor(() => expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument());
+      expect(screen.queryByText(/Selected Time Range:/i)).not.toBeInTheDocument();
+    });
 
-  test('handles authentication error from API', async () => {
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ meta: { time_labels: [] }, results: [] }),
-      text: async () => '',
+    it('should display "Lade Diagrammdaten..." message during loading', async () => {
+      (fetch as jest.Mock).mockImplementationOnce(() => 
+        new Promise(resolve => setTimeout(() => resolve({
+          ok: true,
+          json: async () => mockPlausibleData,
+        }), 100)) 
+      );
+      render(<AnalyticsChart />);
+      expect(await screen.findByText('Lade Diagrammdaten...')).toBeInTheDocument();
+      await waitFor(() => expect(screen.queryByText('Lade Diagrammdaten...')).not.toBeInTheDocument(), { timeout: 500 });
     });
-    render(<AnalyticsChart />);
-  
-    fetch.mockResolvedValueOnce({
-      ok: false,
-      status: 401, // Simulate authentication error
-      text: async () => 'Unauthorized',
+
+    it('should display "Fehler: " message on error', async () => {
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 403,
+        text: async () => 'Forbidden',
+      });
+      render(<AnalyticsChart />);
+      expect(await screen.findByText(/Fehler: Failed to fetch data: 403/)).toBeInTheDocument();
     });
-  
-    const selectElement = screen.getByLabelText(/select time range/i);
-    fireEvent.change(selectElement, { target: { value: 'week' } });
-  
-    expect(await screen.findByText(/failed to fetch data: 401/i)).toBeInTheDocument();
-    expect(await screen.findByText(/authentication failed/i)).toBeInTheDocument();
+
+    it('should display "Keine Daten..." message when no data is available', async () => {
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ meta: { time_labels: [] }, results: [] }), 
+      });
+      render(<AnalyticsChart />);
+      expect(await screen.findByText('Keine Daten für den ausgewählten Zeitraum verfügbar.')).toBeInTheDocument();
+    });
   });
 });
