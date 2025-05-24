@@ -1,3 +1,4 @@
+import { withSentryConfig } from '@sentry/nextjs'
 import { withPayload } from '@payloadcms/next/withPayload'
 import NextBundleAnalyzer from '@next/bundle-analyzer'
 import type { NextConfig } from 'next'
@@ -41,4 +42,15 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 	enabled: process.env.ANALYZE === 'true',
 })
 
-export default withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true })
+export default withSentryConfig(
+	withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true }),
+	{
+		org: 'krause-x0',
+		project: 'javascript-nextjs',
+		authToken: process.env.SENTRY_AUTH_TOKEN,
+		silent: !process.env.CI,
+		widenClientFileUpload: true,
+		tunnelRoute: '/monitoring',
+		disableLogger: true,
+	},
+)

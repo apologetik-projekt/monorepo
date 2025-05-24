@@ -3,6 +3,7 @@ permissions:
   actions: write
   pull-requests: read
   security-events: read
+  id-token: write
 
 on:
   push:
@@ -16,12 +17,11 @@ env:
   NODE_VERSION: 20.19.0 # Check support on azure before updating
   PNPM_VERSION: 10.6.3
   NODE_ENV: production
+  AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
+  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
   GH_TOKEN: ${{ github.token }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
   ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-  AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
-  NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
-  SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
 
 jobs:
   build:
@@ -30,6 +30,8 @@ jobs:
     name: Build
     environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Preview' }}
     env:
+      SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       DATABASE_URI: ${{ secrets.DATABASE_URI }}
     steps:
       - uses: actions/checkout@v3
@@ -100,20 +102,42 @@ jobs:
           skip_api_build: true
           app_location: "./apps/website"
           api_build_command: "rm -rf ./node_modules/@next/swc-*"
+          #deployment_environment: ${{ env.GITHUB_REF_NAME }}
         env:
           skip_deploy_on_missing_secrets: true
           SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
-          NEXT_PUBLIC_SERVER_URL: ${{ env.NEXT_PUBLIC_SERVER_URL }}
-          DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          SMTP_HOST: ${{ env.SMTP_HOST }}
-          SMTP_PORT: ${{ env.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          AZURE_STORAGE_ACCOUNT_BASEURL: ${{ secrets.AZURE_STORAGE_ACCOUNT_BASEURL }}
-          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          AZURE_STORAGE_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}
+      - name: Login to Azure via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Configure runtime app settings
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            if [ "${GITHUB_REF_NAME}" = "master" ]; then ENV="production"; else ENV="${{ github.event.number }}"; fi
+            
+            az staticwebapp appsettings set \
+              --name "website" \
+              --environment-name "$ENV" \
+              --setting-names \
+                  "PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}" \
+                  "NEXT_PUBLIC_SERVER_URL=${{ env.NEXT_PUBLIC_SERVER_URL }}" \
+                  "DATABASE_URI=${{ secrets.DATABASE_URI }}" \
+                  "SMTP_HOST=${{ vars.SMTP_HOST }}" \
+                  "SMTP_PORT=${{ vars.SMTP_PORT }}" \
+                  "SMTP_USER=${{ secrets.SMTP_USER }}" \
+                  "SMTP_PASS=${{ secrets.SMTP_PASS }}" \
+                  "AZURE_STORAGE_ACCOUNT_BASEURL=${{ secrets.AZURE_STORAGE_ACCOUNT_BASEURL }}" \
+                  "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" \
+                  "AZURE_STORAGE_CONTAINER_NAME=${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}" \
+                  "ALTCHA_HMAC_KEY=${{ secrets.ALTCHA_HMAC_KEY }}" \
+                  "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" \
+              --only-show-errors
+        env:
+          AZURE_CLIENT_ID:  ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID:  ${{ secrets.AZURE_TENANT_ID }}
       - name: Cleanup workflow cache
         if: always()
         run: gh cache delete ${{ github.sha }}
