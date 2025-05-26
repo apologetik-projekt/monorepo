@@ -1,5 +1,7 @@
+"use client";
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 /* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import config from '@payload-config'
 import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
@@ -18,6 +20,8 @@ export const viewport: Viewport = {
 	userScalable: false,
 }
 
+const queryClient = new QueryClient();
+
 const serverFunction: ServerFunctionClient = async function (args) {
 	'use server'
 	return handleServerFunctions({
@@ -29,7 +33,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 
 const Layout = ({ children }: Args) => (
 	<RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-		{children}
+		<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 	</RootLayout>
 )
 
