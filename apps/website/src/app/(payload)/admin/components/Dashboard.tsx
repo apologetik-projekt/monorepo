@@ -1,4 +1,4 @@
-import { Button, Gutter } from '@payloadcms/ui'
+import { Gutter } from '@payloadcms/ui'
 import Link from 'next/link'
 import { type PayloadRequest } from 'payload'
 import { cookies, headers } from 'next/headers'
