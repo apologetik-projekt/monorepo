@@ -52,5 +52,6 @@ export default withSentryConfig(
 		widenClientFileUpload: true,
 		tunnelRoute: '/monitoring',
 		disableLogger: true,
+		telemetry: false,
 	},
 )
