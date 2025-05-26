@@ -87,6 +87,10 @@ export default function NavLinks({ permissions, payload, i18n }: ServerProps) {
 
 	return (
 		<div style={{ marginBottom: 10 }}>
+			<NavLink id="dashbaord" href="/admin">
+				Dashboard
+			</NavLink>
+			<div style={{ height: 9 }}></div>
 			{navItems.map(
 				(item) =>
 					getPermission(item.type, item.slug) && (

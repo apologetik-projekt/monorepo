@@ -31,7 +31,7 @@ const nextConfig = {
 			},
 			{
 				source: '/analytics',
-				destination: 'https://anna.apologetik-projekt.de/apologetik-projekt.de',
+				destination: 'https://sherlock.apologetik-projekt.de/apologetik-projekt.de',
 				permanent: false,
 			},
 		]
