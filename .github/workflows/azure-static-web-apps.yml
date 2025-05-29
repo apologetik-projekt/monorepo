@@ -102,8 +102,6 @@ jobs:
           skip_app_build: true
           skip_api_build: true
           app_location: "./apps/website"
-          api_build_command: "rm -rf ./node_modules/@next/swc-*"
-          #deployment_environment: ${{ env.GITHUB_REF_NAME }}
         env:
           skip_deploy_on_missing_secrets: true
           SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}
