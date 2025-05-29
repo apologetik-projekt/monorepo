@@ -132,7 +132,7 @@ jobs:
                   "SMTP_PASS=${{ secrets.SMTP_PASS }}" \
                   "AZURE_STORAGE_ACCOUNT_BASEURL=${{ secrets.AZURE_STORAGE_ACCOUNT_BASEURL }}" \
                   "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" \
-                  "AZURE_STORAGE_CONTAINER_NAME=${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}" \
+                  "AZURE_STORAGE_CONTAINER_NAME=${{ vars.AZURE_STORAGE_CONTAINER_NAME }}" \
                   "ALTCHA_HMAC_KEY=${{ secrets.ALTCHA_HMAC_KEY }}" \
                   "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" \
                   "NEXT_PUBLIC_PLAUSIBLE_API_KEY=${{ secrets.NEXT_PUBLIC_PLAUSIBLE_API_KEY}}" \
