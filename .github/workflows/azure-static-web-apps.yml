@@ -117,7 +117,7 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-            if [ "${{github.ref}}" = "refs/heads/master" ]; then ENV="production"; else ENV="${{ github.event.number }}"; fi
+            if [ "${{github.ref}}" = "refs/heads/master" ]; then ENV="Production"; else ENV="${{ github.event.number }}"; fi
             
             az staticwebapp appsettings set \
               --name "website" \
