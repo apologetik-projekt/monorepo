@@ -7,3 +7,4 @@ onlyBuiltDependencies:
   - iframe-resizer
   - sharp
   - unrs-resolver
+  - esbuild

@@ -11,8 +11,8 @@
 	"sideEffects": false,
 	"packageManager": "pnpm@10.11.0",
 	"dependencies": {
-		"@payloadcms/db-postgres": "3.39.1",
-		"payload": "3.39.1"
+		"@payloadcms/db-postgres": "3.40.0",
+		"payload": "3.40.0"
 	},
 	"pnpm": {
 		"peerDependencyRules": {

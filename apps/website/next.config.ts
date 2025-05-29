@@ -2,6 +2,7 @@ import { withSentryConfig } from '@sentry/nextjs'
 import { withPayload } from '@payloadcms/next/withPayload'
 import NextBundleAnalyzer from '@next/bundle-analyzer'
 import type { NextConfig } from 'next'
+import { withPlausibleProxy } from 'next-plausible'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
@@ -42,8 +43,13 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 	enabled: process.env.ANALYZE === 'true',
 })
 
+const withPlausible = withPlausibleProxy({
+	customDomain: 'https://sherlock.apologetik-projekt.de',
+	scriptName: 'p14u5ib1e',
+})
+
 export default withSentryConfig(
-	withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true }),
+	withPlausible(withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true })),
 	{
 		org: 'apologetik-projekt',
 		project: 'website',

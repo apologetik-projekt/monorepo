@@ -63,7 +63,7 @@ jobs:
         run: pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
-        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
+        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build && rm -rf ./node_modules/@next/swc-* ./.next/cache ./node_modules/@swc ./node_modules/@babel ./node_modules/@tailwindcss
       - uses: actions/cache@v4
         name: Cache build
         id: workflow-cache
@@ -102,8 +102,6 @@ jobs:
           skip_app_build: true
           skip_api_build: true
           app_location: "./apps/website"
-          api_build_command: "rm -rf ./node_modules/@next/swc-*"
-          #deployment_environment: ${{ env.GITHUB_REF_NAME }}
         env:
           skip_deploy_on_missing_secrets: true
           SMTP_SKIP_VERIFY: ${{ env.SMTP_SKIP_VERIFY }}

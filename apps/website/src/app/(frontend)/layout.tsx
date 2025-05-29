@@ -10,6 +10,7 @@ import { getPayload } from 'payload'
 import { importFonts } from '@/styles/fonts'
 import { Body } from '@/styles/layout.client'
 import { ViewTransitions } from 'next-view-transitions'
+import PlausibleProvider from 'next-plausible'
 import './global.css'
 importFonts()
 
@@ -28,15 +29,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					<link href="/favicon.ico" rel="icon" sizes="32x32" />
 					<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 				</head>
-				<Body
-					className={`group/route bg-gray-50 dark:data-supports-dark-mode:bg-[#0E0D0D] min-h-screen flex flex-col`}
-					style={{ overflow: 'auto' }}
+				<PlausibleProvider
+					domain="beta.apologetik-projekt.de"
+					customDomain="sherlock.apologetik-projekt.de"
+					trackOutboundLinks
+					selfHosted
 				>
-					<MobileNavigation navigation={navItems} />
-					<Navigation navigation={navItems} />
-					{children}
-					<Footer />
-				</Body>
+					<Body
+						className={`group/route bg-gray-50 dark:data-supports-dark-mode:bg-[#0E0D0D] min-h-screen flex flex-col`}
+						style={{ overflow: 'auto' }}
+					>
+						<MobileNavigation navigation={navItems} />
+						<Navigation navigation={navItems} />
+						{children}
+						<Footer />
+					</Body>
+				</PlausibleProvider>
 			</html>
 		</ViewTransitions>
 	)
