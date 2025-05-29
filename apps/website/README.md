@@ -4,7 +4,7 @@ Dies ist das Repository für die Website des Apologetik Projekts ([https://apolo
 Das Projekt verwendet React, Next.js, Payload CMS und PostgreSQL.
 
 ## Voraussetzungen
-- Node.js >= 18 (https://nodejs.org/en/download)
+- Node.js >= 20 (https://nodejs.org/en/download)
 - pnpm >= 8 (https://pnpm.io/installation)
 - Eine PostgreSQL Datenbank (https://www.postgresql.org/download/)
 
