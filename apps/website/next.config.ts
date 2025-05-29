@@ -44,7 +44,7 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 })
 
 const withPlausible = withPlausibleProxy({
-	customDomain: 'sherlock.apologetik-projekt.de',
+	customDomain: 'https://sherlock.apologetik-projekt.de',
 	scriptName: 'p14u5ib1e',
 })
 
