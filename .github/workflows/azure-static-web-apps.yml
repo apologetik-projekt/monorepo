@@ -63,7 +63,7 @@ jobs:
         run: pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
-        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build && rm -rf ./node_modules/@swc ./node_modules/@babel ./node_modules/@tailwindcss
+        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build && rm -rf ./node_modules/@next/swc-* ./.next/cache ./node_modules/@swc ./node_modules/@babel ./node_modules/@tailwindcss
       - uses: actions/cache@v4
         name: Cache build
         id: workflow-cache
