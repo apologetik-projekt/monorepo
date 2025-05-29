@@ -18,7 +18,6 @@ import formBuilderPlugin from './plugins/formBuilder'
 import redirectPlugin from './plugins/redirects'
 import azureBlobStoragePlugin from './plugins/azureBlobStorage'
 import nodeMailer from './plugins/emailAdapter'
-import sentry from './plugins/sentry'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -72,7 +71,7 @@ export default buildConfig({
 	}),
 	editor: lexicalEditor({ features: defaultEditorFeatures }),
 	sharp: sharp,
-	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin, azureBlobStoragePlugin, sentry],
+	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin, azureBlobStoragePlugin],
 	typescript: {
 		outputFile: path.resolve(dirname, '../types/payload.d.ts'),
 	},
