@@ -45,8 +45,8 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 export default withSentryConfig(
 	withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true }),
 	{
-		org: 'krause-x0',
-		project: 'javascript-nextjs',
+		org: 'apologetik-projekt',
+		project: 'website',
 		authToken: process.env.SENTRY_AUTH_TOKEN,
 		silent: !process.env.CI,
 		widenClientFileUpload: true,
