@@ -37,6 +37,7 @@ import { Icon as Icon_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo
 import { Logo as Logo_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo.tsx'
 import { default as default_f5637b17ef35040cd7b6bec66113a54c } from '@/app/(payload)/admin/components/NavLinks'
 import { AzureClientUploadHandler as AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104 } from '@payloadcms/storage-azure/client'
+import { AdminErrorBoundary as AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688 } from '@payloadcms/plugin-sentry/client'
 import { default as default_18bb40269632d984e1697dac993c76c7 } from '@/app/(payload)/admin/components/Dashboard'
 
 export const importMap = {
@@ -79,5 +80,6 @@ export const importMap = {
   "@/components/logo.tsx#Logo": Logo_98b9c1e527fb6c856d7dd54df5e3faa4,
   "@/app/(payload)/admin/components/NavLinks#default": default_f5637b17ef35040cd7b6bec66113a54c,
   "@payloadcms/storage-azure/client#AzureClientUploadHandler": AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104,
+  "@payloadcms/plugin-sentry/client#AdminErrorBoundary": AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688,
   "@/app/(payload)/admin/components/Dashboard#default": default_18bb40269632d984e1697dac993c76c7
 }

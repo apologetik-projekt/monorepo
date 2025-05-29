@@ -10,7 +10,7 @@ const revalidateRedirects: CollectionAfterChangeHook = ({ doc, req: { payload } 
 	return doc
 }
 
-const plugin = redirectsPlugin({
+export default redirectsPlugin({
 	collections: ['pages', 'posts'],
 	overrides: {
 		labels: {
@@ -39,4 +39,3 @@ const plugin = redirectsPlugin({
 		},
 	},
 })
-export default plugin

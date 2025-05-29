@@ -105,7 +105,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc 
 	return modifiedDoc
 }
 
-const plugin = searchPlugin({
+export default searchPlugin({
 	collections: ['posts'],
 	beforeSync: beforeSyncWithSearch,
 	searchOverrides: {
@@ -114,5 +114,3 @@ const plugin = searchPlugin({
 		},
 	},
 })
-
-export default plugin

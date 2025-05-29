@@ -2,7 +2,7 @@ import { azureStorage } from '@payloadcms/storage-azure'
 
 const collections = { media: true } as const
 
-const plugin = azureStorage({
+export default azureStorage({
 	collections: collections,
 	allowContainerCreate: false,
 	enabled: process.env.NODE_ENV == 'production',
@@ -10,5 +10,3 @@ const plugin = azureStorage({
 	connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING ?? '',
 	containerName: process.env.AZURE_STORAGE_CONTAINER_NAME ?? '',
 })
-
-export default plugin

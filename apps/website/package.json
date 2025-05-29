@@ -26,6 +26,7 @@
 		"@payloadcms/plugin-form-builder": "3.39.1",
 		"@payloadcms/plugin-redirects": "3.39.1",
 		"@payloadcms/plugin-search": "3.39.1",
+		"@payloadcms/plugin-sentry": "^3.39.1",
 		"@payloadcms/plugin-seo": "3.39.1",
 		"@payloadcms/richtext-lexical": "3.39.1",
 		"@payloadcms/storage-azure": "^3.39.1",

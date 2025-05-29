@@ -34,10 +34,9 @@ export const generateDescription: GenerateDescription<CollectionWithSEO> = ({ do
 	return ''
 }
 
-const plugin = seoPlugin({
+export default seoPlugin({
 	generateTitle,
 	generateURL,
 	generateImage,
 	generateDescription,
 })
-export default plugin
