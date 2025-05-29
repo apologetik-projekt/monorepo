@@ -1,22 +1,35 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "target": "ES2022",
-    "incremental": true,
-    "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "#/*": ["./*"],
-      "@payload-config": ["./src/payload.config.ts"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/payload.d.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"baseUrl": ".",
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"target": "ES2022",
+		"incremental": true,
+		"jsx": "preserve",
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"#/*": ["./*"],
+			"@payload-config": ["./src/payload.config.ts"]
+		},
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"moduleDetection": "force",
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"allowImportingTsExtensions": true,
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"noEmit": true
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/payload.d.ts"],
+	"exclude": ["node_modules"]
 }
