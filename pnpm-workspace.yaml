@@ -1,2 +1,9 @@
 packages:
-  - 'apps/website'
+  - apps/website
+onlyBuiltDependencies:
+  - '@sentry/cli'
+  - '@tailwindcss/oxide'
+  - altcha
+  - iframe-resizer
+  - sharp
+  - unrs-resolver
