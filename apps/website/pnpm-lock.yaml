@@ -8,15 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@payloadcms/db-postgres':
-        specifier: 3.39.1
-        version: 3.39.1(@opentelemetry/api@1.9.0)(@types/react@19.1.6)(payload@3.39.1(graphql@16.11.0)(typescript@5.8.3))(react@19.1.0)
-      payload:
-        specifier: 3.39.1
-        version: 3.39.1(graphql@16.11.0)(typescript@5.8.3)
-
-  apps/website:
-    dependencies:
       '@azure/functions':
         specifier: ^4.7.0
         version: 4.7.2
@@ -8770,7 +8761,7 @@ snapshots:
     dependencies:
       '@sentry/bundler-plugin-core': 2.22.7
       unplugin: 1.0.1
-      uuid: 9.0.0
+      uuid: 9.0.1
       webpack: 5.99.9(esbuild@0.19.12)
     transitivePeerDependencies:
       - encoding
@@ -8780,7 +8771,7 @@ snapshots:
     dependencies:
       '@sentry/bundler-plugin-core': 3.5.0
       unplugin: 1.0.1
-      uuid: 9.0.0
+      uuid: 9.0.1
       webpack: 5.99.9(esbuild@0.19.12)
     transitivePeerDependencies:
       - encoding
@@ -9330,7 +9321,7 @@ snapshots:
 
   '@types/pg-pool@2.0.6':
     dependencies:
-      '@types/pg': 8.10.2
+      '@types/pg': 8.6.1
 
   '@types/pg@8.10.2':
     dependencies:
