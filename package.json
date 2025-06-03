@@ -20,6 +20,16 @@
 				"react",
 				"react-dom"
 			]
-		}
+		},
+		"onlyBuiltDependencies": [
+			"@sentry/cli",
+			"@tailwindcss/oxide",
+			"altcha",
+			"esbuild",
+			"iframe-resizer",
+			"sharp",
+			"unrs-resolver",
+			"workerd"
+		]
 	}
 }
