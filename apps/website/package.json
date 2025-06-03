@@ -18,6 +18,7 @@
 		"@azure/functions": "^4.7.0",
 		"@cassiozen/usestatemachine": "^1.0.1",
 		"@next/bundle-analyzer": "^15.3.2",
+		"@opennextjs/cloudflare": "^1.1.0",
 		"@payloadcms/db-postgres": "3.40.0",
 		"@payloadcms/email-nodemailer": "3.40.0",
 		"@payloadcms/live-preview-react": "3.40.0",
@@ -81,7 +82,8 @@
 		"eslint": "^9.16.0",
 		"eslint-config-next": "^15.3.2",
 		"prettier": "^3.4.2",
-		"typescript": "^5.8.0"
+		"typescript": "^5.8.0",
+		"wrangler": "^4.18.0"
 	},
 	"engines": {
 		"node": ">=20.9.0 <=24.0.0"
