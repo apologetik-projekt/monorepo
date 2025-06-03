@@ -17,7 +17,7 @@ env:
   NODE_VERSION: 20.19.0 # Check support on azure before updating
   PNPM_VERSION: 10.6.3
   NODE_ENV: production
-  AZURE_DEPLOYMENT_URL:  https://zealous-rock-0009d2403${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
+  AZURE_DEPLOYMENT_URL: https://white-pond-019a5c103${{ github.event.number && format('-{0}', github.event.number) }}.westeurope.6.azurestaticapps.net
   NEXT_PUBLIC_SERVER_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
   GH_TOKEN: ${{ github.token }}
   PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
@@ -95,7 +95,7 @@ jobs:
         if: ${{ !env.ACT || env.DEPLOY == 'true' }}
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_POND_019A5C103 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: "master"
           action: "upload"
@@ -151,5 +151,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_POND_019A5C103 }}
           action: "close"
