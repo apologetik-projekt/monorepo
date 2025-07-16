@@ -24,6 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
 
     steps:
       - uses: actions/checkout@v4
