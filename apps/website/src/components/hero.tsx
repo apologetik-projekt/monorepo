@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import Image, { type StaticImageData } from 'next/image'
 import { isbot } from 'isbot'
 import { preload } from 'react-dom'
+import type { Variants } from 'motion/react'
 
 const imageVariants = {
 	hidden: {
@@ -18,7 +19,8 @@ const imageVariants = {
 		y: 2,
 		transition: { duration: 0.6, type: 'tween', ease: 'easeOut' },
 	},
-}
+} satisfies Variants
+
 const textVariants = {
 	hidden: {
 		y: 50,
@@ -33,7 +35,7 @@ const textVariants = {
 			ease: 'easeOut',
 		},
 	},
-}
+} satisfies Variants
 
 interface Props {
 	heading: string

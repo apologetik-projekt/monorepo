@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import * as m from 'motion/react-m'
-import { AnimatePresence } from 'motion/react'
+import { AnimatePresence, type Variants } from 'motion/react'
 
 const loadMotionFeatures = import('../utilities/motionFeatures').then((res) => res.default)
 
@@ -39,7 +39,7 @@ export default function MobileNavigation({ navigation }: Props) {
 				borderRadius: { duration: 0.3, delay: 0.1 },
 			},
 		},
-	}
+	} satisfies Variants
 	const menuList = {
 		hidden: { opacity: 0 },
 		show: {
@@ -75,7 +75,7 @@ export default function MobileNavigation({ navigation }: Props) {
 				duration: delayedTransition ? 0.05 : 0.01,
 			},
 		}),
-	}
+	} satisfies Variants
 
 	function startTransition() {
 		setTimeout(() => setIsMenuOpen(false), 450)
