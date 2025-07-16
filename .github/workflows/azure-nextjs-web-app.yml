@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    environment: Production
     env:
       SMTP_SKIP_VERIFY: ${{ vars.SMTP_SKIP_VERIFY }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
