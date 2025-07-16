@@ -79,7 +79,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-
+    environment: Production
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
