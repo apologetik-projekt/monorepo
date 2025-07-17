@@ -68,6 +68,7 @@ jobs:
         working-directory: ./apps/website/dist/standalone
         run: |
           mv ../../public public
+          mkdir -p /dist/static
           mv ../static /dist/static
           zip -r ../../../../release.zip .
 
