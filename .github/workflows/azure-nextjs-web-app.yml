@@ -64,10 +64,10 @@ jobs:
           path: ./*
           key: ${{ github.sha }}
       - name: Zip artifact for deployment
+        working-directory: ./apps/website/dist/standalone
         run: |
-          cd ./apps/website/dist/standalone
           mv apps/website app
-          zip -r ../../../../release.zip ./*
+          zip -r ../../../../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -88,9 +88,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -104,6 +101,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'apologetik-projekt'
-          slot-name: 'Production'
-          package: .
+          slot-name: 'production'
+          package: release.zip
           
