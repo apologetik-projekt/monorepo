@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install packages
-        run: pnpm install --config.node-linker=isolated
+        run: pnpm install --config.node-linker=isolated --shamefully-hoist
       - name: Migrate database
         working-directory: ./apps/website
         run: pnpm run payload migrate
@@ -104,4 +104,5 @@ jobs:
           app-name: 'apologetik-projekt'
           slot-name: 'production'
           package: release.zip
+          type: zip
           
