@@ -12,6 +12,7 @@
 		"lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
 		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
 		"start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+		"start:azure": "PORT=8080 node ./server.js",
 		"analyze": "cross-env ANALYZE=true pnpm run build"
 	},
 	"dependencies": {
