@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"build": "cross-env NODE_OPTIONS=--no-deprecation next build --turbo",
+		"build": "cross-env NODE_OPTIONS=--no-deprecation next build",
 		"dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
 		"devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
 		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",

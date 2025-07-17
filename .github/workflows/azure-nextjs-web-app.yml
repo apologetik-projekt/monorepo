@@ -65,7 +65,10 @@ jobs:
           key: ${{ github.sha }}
       - name: Zip artifact for deployment
         working-directory: ./apps/website/dist/standalone
-        run: zip -r ../../../../release.zip .
+        run: |
+          mv ../../public apps/website/public
+          mv ../static apps/website/static
+          zip -r ../../../../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
