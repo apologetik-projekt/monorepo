@@ -32,31 +32,32 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
+      # - name: Use pnpm ${{ env.PNPM_VERSION }}
+      #   uses: pnpm/action-setup@v3
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
+          cache: npm
       - uses: actions/cache@v4
         with:
           path: |
             ${{ env.PNPM_HOME }}
             ${{ github.workspace }}/apps/website/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Install packages
-        run: pnpm install --config.node-linker=isolated --shamefully-hoist
+        working-directory: ./apps/website
+        run: npm install #--config.node-linker=isolated --shamefully-hoist
       - name: Migrate database
         working-directory: ./apps/website
-        run: pnpm run payload migrate
+        run: npm run payload migrate
       - name: Build
         working-directory: ./apps/website
-        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
+        run: npm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 npm run build
       - uses: actions/cache@v4
         name: Cache build
         id: workflow-cache
