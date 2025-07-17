@@ -68,7 +68,7 @@ jobs:
         working-directory: ./apps/website/dist/standalone
         run: |
           mv ../../public public
-          mv ../static static
+          mv ../static /dist/static
           zip -r ../../../../release.zip .
 
       - name: Upload artifact for deployment job
