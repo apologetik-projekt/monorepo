@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install packages
-        run: pnpm install
+        run: pnpm config set node-linker=isolated && pnpm install
       - name: Migrate database
         working-directory: ./apps/website
         run: pnpm run payload migrate
