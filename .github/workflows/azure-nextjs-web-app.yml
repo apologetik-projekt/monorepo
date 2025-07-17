@@ -32,15 +32,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # - name: Use pnpm ${{ env.PNPM_VERSION }}
-      #   uses: pnpm/action-setup@v3
-      #   with:
-      #     version: ${{ env.PNPM_VERSION }}
+      - name: Use pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          #cache: pnpm
+          cache: pnpm
       - uses: actions/cache@v4
         with:
           path: |
@@ -51,13 +51,13 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Install packages
         working-directory: ./apps/website
-        run: npm install --no-package-lock #--config.node-linker=isolated --shamefully-hoist
+        run: pnpm install --shamefully-hoist
       - name: Migrate database
         working-directory: ./apps/website
-        run: npm run payload migrate
+        run: pnpm run payload migrate
       - name: Build
         working-directory: ./apps/website
-        run: npm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 npm run build
+        run: pnpm run payload generate:importmap && NEXT_TELEMETRY_DISABLED=1 pnpm run build
       - uses: actions/cache@v4
         name: Cache build
         id: workflow-cache
@@ -67,8 +67,8 @@ jobs:
       - name: Zip artifact for deployment
         working-directory: ./apps/website/dist/standalone
         run: |
-          mv ../../public apps/website/public
-          mv ../static apps/website/static
+          mv ../../public public
+          mv ../static static
           zip -r ../../../../release.zip .
 
       - name: Upload artifact for deployment job
