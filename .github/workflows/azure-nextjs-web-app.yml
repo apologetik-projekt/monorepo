@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Install packages
         working-directory: ./apps/website
-        run: npm install #--config.node-linker=isolated --shamefully-hoist
+        run: npm install --no-package-lock #--config.node-linker=isolated --shamefully-hoist
       - name: Migrate database
         working-directory: ./apps/website
         run: npm run payload migrate
