@@ -50,7 +50,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install packages
-        working-directory: ./apps/website
         run: pnpm install --shamefully-hoist
       - name: Migrate database
         working-directory: ./apps/website
