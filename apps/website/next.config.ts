@@ -3,6 +3,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import NextBundleAnalyzer from '@next/bundle-analyzer'
 import type { NextConfig } from 'next'
 import { withPlausibleProxy } from 'next-plausible'
+import path from 'path'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
@@ -10,6 +11,7 @@ const nextConfig = {
 	output: 'standalone',
 	distDir: 'dist',
 	poweredByHeader: false,
+	outputFileTracingRoot: path.join(__dirname, '../../'),
 	devIndicators: {
 		position: 'bottom-right',
 	},

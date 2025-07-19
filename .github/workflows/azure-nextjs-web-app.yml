@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          #cache: pnpm
+          cache: pnpm
       - uses: actions/cache@v4
         with:
           path: |
@@ -65,12 +65,11 @@ jobs:
           path: ./*
           key: ${{ github.sha }}
       - name: Zip artifact for deployment
-        working-directory: ./apps/website/dist/standalone
+        working-directory: ./apps/website/dist/standalone/apps/website
         run: |
-          mv ../../public public
-          mkdir -p ./dist/static
-          mv ../static/* ./dist/static
-          zip -r ../../../../release.zip .
+          mv ../../../../public public
+          mv ../../../static/* ./dist/static
+          zip -r ../../../../../../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
