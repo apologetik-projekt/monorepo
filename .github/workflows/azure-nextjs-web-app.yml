@@ -68,6 +68,7 @@ jobs:
         run: |
           mv ../../../../public public
           mv ../../../static dist/static
+          mv ../../node_modules node_modules
           zip -r ../../../../../../release.zip .
 
       - name: Upload artifact for deployment job
