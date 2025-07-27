@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
-import { link } from '@/fields/link'
-import { isAdmin } from '@/access/isAdmin'
+import { link } from '#/payload/fields/link'
+import { isAdmin } from '#/payload/access/isAdmin'
 
 export const Navigation: GlobalConfig = {
 	slug: 'navigation',
@@ -92,7 +92,7 @@ export const Navigation: GlobalConfig = {
 					admin: {
 						initCollapsed: true,
 						components: {
-							RowLabel: '@/app/(payload)/admin/components/RowLabel#RowLabel',
+							RowLabel: './components/RowLabel#RowLabel',
 						},
 						condition: (_: unknown, siblingData: Partial<any>) => {
 							return siblingData?.type === 'group'
@@ -104,7 +104,7 @@ export const Navigation: GlobalConfig = {
 			admin: {
 				initCollapsed: true,
 				components: {
-					RowLabel: '@/app/(payload)/admin/components/RowLabel#RowLabel',
+					RowLabel: './components/RowLabel#RowLabel',
 				},
 			},
 		},

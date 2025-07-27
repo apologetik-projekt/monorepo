@@ -1,6 +1,6 @@
 import type { CollectionBeforeOperationHook, CollectionConfig } from 'payload'
 
-import { ImageBlock } from '../../blocks/Media/config'
+import { ImageBlock } from '#/payload/blocks/Media/config'
 
 import {
 	MetaDescriptionField,
@@ -9,8 +9,8 @@ import {
 	OverviewField,
 	PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { authenticated } from '@/access/authenticated'
-import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
+import { authenticated } from '#/payload/access/authenticated'
+import { authenticatedOrPublished } from '#/payload/access/authenticatedOrPublished'
 import {
 	lexicalEditor,
 	BlocksFeature,
@@ -31,9 +31,9 @@ import {
 	LinkFeature,
 } from '@payloadcms/richtext-lexical'
 
-import { slugField } from '@/fields/slug/config'
-import { generatePreviewPath } from '@/utilities/generatePreviewPath'
-import { ExcerptBlock } from '@/blocks/Excerpt/config'
+import { slugField } from '#/payload/fields/slug/config'
+import { generatePreviewPath } from '#/payload/utilities/generatePreviewPath'
+import { ExcerptBlock } from '#/payload/blocks/Excerpt/config'
 import { revalidateDelete, revalidatePost, updateReadingTime } from './hooks'
 
 const populateInitialData: CollectionBeforeOperationHook = ({ args, operation, req }) => {

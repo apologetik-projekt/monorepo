@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { PayloadRedirects } from '@/components/redirects'
-import configPromise from '@payload-config'
+import configPromise from '#/payload/payload.config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/live-preview'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { RenderBlocks } from '#/payload/blocks/RenderBlocks'
 import { redirect } from 'next/navigation'
 
 type Args = {

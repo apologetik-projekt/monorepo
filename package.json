@@ -8,8 +8,8 @@
 	"sideEffects": false,
 	"packageManager": "pnpm@10.13.0",
 	"dependencies": {
-		"@payloadcms/db-postgres": "3.47.0",
-		"payload": "3.47.0"
+		"@payloadcms/db-postgres": "3.49.0",
+		"payload": "3.49.0"
 	},
 	"pnpm": {
 		"peerDependencyRules": {

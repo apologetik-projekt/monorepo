@@ -2,7 +2,7 @@ import type { Form as FormType } from '#/types/payload'
 import type { SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import { getPayload } from 'payload'
 import { SubmitButton, Form } from './Component.client'
-import configPromise from '@payload-config'
+import configPromise from '#/payload/payload.config'
 import Altcha from './Altcha'
 
 export function FormBlock({ node }: { node: SerializedBlockNode }) {

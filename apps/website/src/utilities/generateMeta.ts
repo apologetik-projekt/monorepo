@@ -3,47 +3,47 @@ import type { Metadata } from 'next'
 import type { Media, Page, Post, Config } from '#/types/payload'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
-import { getServerSideURL } from './getURL'
+import { getServerSideURL } from '../../payload/utilities/getURL'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
-  const serverUrl = getServerSideURL()
+	const serverUrl = getServerSideURL()
 
-  let url = serverUrl + '/website-template-OG.webp'
+	let url = serverUrl + '/website-template-OG.webp'
 
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
+	if (image && typeof image === 'object' && 'url' in image) {
+		const ogUrl = image.sizes?.og?.url
 
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
-  }
+		url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
+	}
 
-  return url
+	return url
 }
 
 export const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<Post>
+	doc: Partial<Page> | Partial<Post>
 }): Promise<Metadata> => {
-  const { doc } = args || {}
+	const { doc } = args || {}
 
-  const ogImage = getImageURL(doc?.meta?.image)
+	const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Apologetik Projekt'
-    : 'Das Apologetik Projekt - Christliche Apologetik'
+	const title = doc?.meta?.title
+		? doc?.meta?.title + ' | Apologetik Projekt'
+		: 'Das Apologetik Projekt - Christliche Apologetik'
 
-  return {
-    description: doc?.meta?.description,
-    openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
-      title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
-    }),
-    title,
-  }
+	return {
+		description: doc?.meta?.description,
+		openGraph: mergeOpenGraph({
+			description: doc?.meta?.description || '',
+			images: ogImage
+				? [
+						{
+							url: ogImage,
+						},
+					]
+				: undefined,
+			title,
+			url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+		}),
+		title,
+	}
 }

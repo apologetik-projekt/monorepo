@@ -53,7 +53,7 @@ const withPlausible = withPlausibleProxy({
 })
 
 export default withSentryConfig(
-	withPlausible(withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: true })),
+	withPlausible(withPayload(withBundleAnalyzer(nextConfig), { devBundleServerPackages: false })),
 	{
 		org: 'apologetik-projekt',
 		project: 'website',
@@ -63,5 +63,5 @@ export default withSentryConfig(
 		tunnelRoute: '/monitoring',
 		disableLogger: true,
 		telemetry: false,
-	},
+	}
 )
