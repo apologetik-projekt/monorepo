@@ -1,7 +1,7 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { type MigrateUpArgs, type MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.execute(sql`
+export async function up({ db }: MigrateUpArgs): Promise<void> {
+	await db.execute(sql`
    CREATE TYPE "public"."enum_payload_folders_folder_type" AS ENUM('media');
   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
@@ -48,8 +48,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE UNIQUE INDEX "redirects_from_idx" ON "redirects" USING btree ("from");`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-  await db.execute(sql`
+export async function down({ db }: MigrateDownArgs): Promise<void> {
+	await db.execute(sql`
    ALTER TABLE "users_sessions" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "payload_folders_folder_type" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "payload_folders" DISABLE ROW LEVEL SECURITY;
