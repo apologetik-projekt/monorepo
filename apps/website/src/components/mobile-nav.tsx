@@ -136,7 +136,11 @@ export default function MobileNavigation({ navigation }: Props) {
 									className="mt-10 p-4 px-8 text-5xl font-semibold space-y-3 flex flex-col mb-4"
 								>
 									{navigation?.map((item) => (
-										<m.li key={item.id} variants={menuItem}>
+										<m.li
+											key={item.id}
+											variants={menuItem}
+											whileTap={{ scale: 0.98, originX: '25%' }}
+										>
 											{item.type == 'group' ? (
 												<SubLinks onClick={startTransition} item={item} />
 											) : (

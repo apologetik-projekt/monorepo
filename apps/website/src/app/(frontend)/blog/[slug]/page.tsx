@@ -1,9 +1,9 @@
 // import Citation from '~/components/citation'
-import { cache, type ImgHTMLAttributes } from 'react'
+import { cache } from 'react'
 import type { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import configPromise from '#/payload/payload.config'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -134,15 +134,12 @@ function Author({ author, date, slug }: any) {
 		author?.image?.url ??
 		`https://ui-avatars.com/api/?name=${author?.firstName}+${author?.lastName}&background=7cd3fc&color=22222c`
 
-	const Img = author?.image?.url
-		? Image
-		: (props: ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />
 	return (
 		<div
 			className="flex items-center py-4 mt-2 -ml-0.5 relative z-10"
 			style={{ viewTransitionName: `author-${slug}` }}
 		>
-			<Img
+			<Image
 				style={{ viewTransitionName: `author-image-${slug}` }}
 				alt="avatar"
 				className="object-cover object-center border-2 border-transparent rounded-full aspect-square h-10"
@@ -150,6 +147,7 @@ function Author({ author, date, slug }: any) {
 				width={40}
 				src={profileImage}
 				placeholder="empty"
+				unoptimized={!author?.image?.url}
 			/>
 			<p className="leading-none mt-1 ml-2">
 				<span className="uppercase font-semibold text-gray-700 dark:text-gray-300 opacity-95 relative z-20">

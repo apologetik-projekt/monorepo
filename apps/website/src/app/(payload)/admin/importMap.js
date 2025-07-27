@@ -28,18 +28,19 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
-import { SlugComponent as SlugComponent_5d0ed528a36488e3523062e7f8b1f244 } from '@/app/(payload)/admin/components/fields/slug/client'
+import { SlugComponent as SlugComponent_516fd0f336b7ea4062f456ef5ac59fad } from '../../../../payload/fields/slug/component'
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { FolderEditField as FolderEditField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { RowLabel as RowLabel_d20f36a953b559bd554f32872511e505 } from '@/app/(payload)/admin/components/RowLabel'
-import { Avatar as Avatar_e8c4a132e2941e63c7b536ee4f9449c5 } from '@/app/(payload)/admin/components/Avatar.tsx'
-import { LogoutButton as LogoutButton_0e0b64c99b38812371163fa31fbe5248 } from '@/app/(payload)/admin/components/Logout.tsx'
+import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
+import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { RowLabel as RowLabel_13adc823584f5c5c7db506c687925e4f } from '../../../../payload/components/RowLabel'
+import { Avatar as Avatar_080d40ac10f7893ec71bc3bcbb987a40 } from '../../../../payload/components/Avatar.tsx'
+import { LogoutButton as LogoutButton_811a6ecfd99f45291a6a3b3c625d2860 } from '../../../../payload/components/Logout.tsx'
 import { Icon as Icon_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo.tsx'
 import { Logo as Logo_98b9c1e527fb6c856d7dd54df5e3faa4 } from '@/components/logo.tsx'
-import { default as default_f5637b17ef35040cd7b6bec66113a54c } from '@/app/(payload)/admin/components/NavLinks'
+import { default as default_6ae2c426d8b000fa45ca8175228096bb } from '../../../../payload/components/NavLinks'
 import { AzureClientUploadHandler as AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104 } from '@payloadcms/storage-azure/client'
-import { default as default_18bb40269632d984e1697dac993c76c7 } from '@/app/(payload)/admin/components/Dashboard'
+import { default as default_c22c6ded068ed0e94e9b6d1c50d7f3ee } from '../../../../payload/components/Dashboard'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -72,16 +73,17 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
-  "@/app/(payload)/admin/components/fields/slug/client#SlugComponent": SlugComponent_5d0ed528a36488e3523062e7f8b1f244,
+  "./fields/slug/component#SlugComponent": SlugComponent_516fd0f336b7ea4062f456ef5ac59fad,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
-  "@payloadcms/ui/rsc#FolderEditField": FolderEditField_ab83ff7e88da8d3530831f296ec4756a,
-  "@/app/(payload)/admin/components/RowLabel#RowLabel": RowLabel_d20f36a953b559bd554f32872511e505,
-  "@/app/(payload)/admin/components/Avatar.tsx#Avatar": Avatar_e8c4a132e2941e63c7b536ee4f9449c5,
-  "@/app/(payload)/admin/components/Logout.tsx#LogoutButton": LogoutButton_0e0b64c99b38812371163fa31fbe5248,
+  "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
+  "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
+  "./components/RowLabel#RowLabel": RowLabel_13adc823584f5c5c7db506c687925e4f,
+  "./components/Avatar.tsx#Avatar": Avatar_080d40ac10f7893ec71bc3bcbb987a40,
+  "./components/Logout.tsx#LogoutButton": LogoutButton_811a6ecfd99f45291a6a3b3c625d2860,
   "@/components/logo.tsx#Icon": Icon_98b9c1e527fb6c856d7dd54df5e3faa4,
   "@/components/logo.tsx#Logo": Logo_98b9c1e527fb6c856d7dd54df5e3faa4,
-  "@/app/(payload)/admin/components/NavLinks#default": default_f5637b17ef35040cd7b6bec66113a54c,
+  "./components/NavLinks#default": default_6ae2c426d8b000fa45ca8175228096bb,
   "@payloadcms/storage-azure/client#AzureClientUploadHandler": AzureClientUploadHandler_635fb302eaf52f6baca4f9f8ad9ce104,
-  "@/app/(payload)/admin/components/Dashboard#default": default_18bb40269632d984e1697dac993c76c7
+  "./components/Dashboard#default": default_c22c6ded068ed0e94e9b6d1c50d7f3ee
 }

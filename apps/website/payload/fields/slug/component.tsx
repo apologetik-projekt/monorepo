@@ -4,8 +4,8 @@ import type { TextFieldClientProps } from 'payload'
 
 import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
 
-import { formatSlug } from '@/fields/slug/formatSlug'
-import './index.css'
+import { formatSlug } from '#/payload/fields/slug/formatSlug'
+import './styles.css'
 
 type SlugComponentProps = {
 	fieldToUse: string
@@ -62,7 +62,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
 				value: !checkboxValue,
 			})
 		},
-		[checkboxValue, checkboxFieldPath, dispatchFields],
+		[checkboxValue, checkboxFieldPath, dispatchFields]
 	)
 
 	const readOnly = readOnlyFromProps || checkboxValue

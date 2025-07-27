@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import configPromise from '#/payload/payload.config'
 import type { CollectionSlug } from 'payload'
 import { NextResponse } from 'next/server'
-import { getServerSideURL } from '@/utilities/getURL'
+import { getServerSideURL } from '#/payload/utilities/getURL'
 
 export const revalidate = 0
 export const dynamic = 'force-dynamic'
@@ -16,7 +16,7 @@ export async function GET(
 				value: string
 			}
 		}
-	},
+	}
 ): Promise<Response> {
 	const payload = await getPayload({ config: configPromise })
 	const token = req.cookies.get('payload-token')?.value

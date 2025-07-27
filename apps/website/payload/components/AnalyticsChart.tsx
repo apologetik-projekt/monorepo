@@ -122,6 +122,7 @@ const AnalyticsChart: React.FC = () => {
 							<Button
 								buttonStyle="subtle"
 								size="large"
+								margin={false}
 								icon={
 									<svg
 										height={15}
@@ -232,7 +233,7 @@ const AnalyticsChart: React.FC = () => {
 														<strong>Zeit:</strong>{' '}
 														{getXAxisTickFormat(
 															getX(tooltipData.nearestDatum.datum as DataPoint),
-															timeRange,
+															timeRange
 														)}
 													</div>
 													<div>

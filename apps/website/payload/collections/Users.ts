@@ -1,5 +1,5 @@
-import { authenticated } from '@/access/authenticated'
-import { isAdmin } from '@/access/isAdmin'
+import { authenticated } from '#/payload/access/authenticated'
+import { isAdmin } from '#/payload/access/isAdmin'
 import { generateExpiredPayloadCookie, type CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {

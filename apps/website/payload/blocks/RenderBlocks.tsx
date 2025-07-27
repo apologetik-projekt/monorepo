@@ -1,6 +1,6 @@
 import { RichText, type JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
-import { FormBlock } from '@/blocks/Form/Component'
-import { ImageBlock } from '@/blocks/Media/Component'
+import { FormBlock } from '#/payload/blocks/Form/Component'
+import { ImageBlock } from '#/payload/blocks/Media/Component'
 import type { Page } from '#/types/payload'
 import {
 	type SerializedEditorState,

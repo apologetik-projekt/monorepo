@@ -25,7 +25,7 @@ const dirname = path.dirname(filename)
 export default buildConfig({
 	admin: {
 		avatar: {
-			Component: '@/app/(payload)/admin/components/Avatar.tsx#Avatar',
+			Component: './components/Avatar.tsx#Avatar',
 		},
 		user: Users.slug,
 		importMap: {
@@ -47,16 +47,16 @@ export default buildConfig({
 				Icon: '@/components/logo.tsx#Icon',
 			},
 			logout: {
-				Button: '@/app/(payload)/admin/components/Logout.tsx#LogoutButton',
+				Button: './components/Logout.tsx#LogoutButton',
 			},
 			beforeNavLinks: [
 				{
-					path: '@/app/(payload)/admin/components/NavLinks#default',
+					path: './components/NavLinks#default',
 				},
 			],
 			views: {
 				dashboard: {
-					Component: '@/app/(payload)/admin/components/Dashboard#default',
+					Component: './components/Dashboard#default',
 				},
 			},
 		},
@@ -67,8 +67,12 @@ export default buildConfig({
 		pool: {
 			connectionString: process.env.DATABASE_URI || '',
 		},
-		migrationDir: path.resolve(dirname, 'migrations'),
+		migrationDir: path.resolve(dirname, '../migrations'),
 	}),
+	folders: {
+		browseByFolder: false,
+		collectionSpecific: true,
+	},
 	editor: lexicalEditor({ features: defaultEditorFeatures }),
 	sharp: sharp,
 	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin, azureBlobStoragePlugin],
@@ -81,10 +85,8 @@ export default buildConfig({
 		translations: {
 			de: {
 				general: {
-					livePreview: 'Live-Vorschau',
-				},
-				fields: {
-					addNew: 'Neuen Eintrag hinzufügen',
+					createNew: 'Neuen Eintrag erstellen',
+					createNewLabel: 'Neuen Eintrag erstellen',
 				},
 			},
 		},

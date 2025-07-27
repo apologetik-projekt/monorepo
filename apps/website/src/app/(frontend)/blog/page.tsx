@@ -1,5 +1,5 @@
 import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import configPromise from '#/payload/payload.config'
 import { Link } from 'next-view-transitions'
 import Image from 'next/image'
 import type { Post } from '#/types/payload'

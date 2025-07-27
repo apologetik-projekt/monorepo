@@ -1,5 +1,5 @@
 'use client'
-import { getClientSideURL } from '@/utilities/getURL'
+import { getClientSideURL } from '#/payload/utilities/getURL'
 import { usePathname, useRouter } from 'next/navigation'
 import { useActionState, useEffect, useState } from 'react'
 import { Style } from './styles'
