@@ -23,7 +23,7 @@
 		".next/types/**/*.ts",
 		"next-env.d.ts",
 		"types/payload.d.ts",
-		"dist/types/**/*.ts"
+		".next/types/**/*.ts"
 	],
 	"exclude": ["node_modules"]
 }

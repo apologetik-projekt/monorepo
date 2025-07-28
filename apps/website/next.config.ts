@@ -9,7 +9,6 @@ const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://loc
 
 const nextConfig = {
 	output: 'standalone',
-	distDir: 'dist',
 	poweredByHeader: false,
 	outputFileTracingRoot: path.join(__dirname, '../../'),
 	devIndicators: {
