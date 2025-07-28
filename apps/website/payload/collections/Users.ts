@@ -13,7 +13,12 @@ export const Users: CollectionConfig = {
 		defaultColumns: ['fullName', 'email'],
 		useAsTitle: 'fullName',
 	},
-	auth: true,
+	auth: {
+		loginWithUsername: {
+			allowEmailLogin: true,
+			requireEmail: true,
+		},
+	},
 	access: {
 		admin: authenticated,
 		create: isAdmin,
