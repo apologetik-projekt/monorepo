@@ -69,6 +69,7 @@ jobs:
         run: |
           mv ../../../../public public
           mv ../../../static .next/static
+          mv ../../../cache .next/cache
           mv ../../node_modules node_modules
           zip -r ../../../../../../release.zip .
 
