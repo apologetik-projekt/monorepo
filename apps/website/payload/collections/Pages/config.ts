@@ -16,7 +16,6 @@ import {
 	EXPERIMENTAL_TableFeature,
 	FixedToolbarFeature,
 	UploadFeature,
-	HTMLConverterFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { slugField } from '#/payload/fields/slug/config'
@@ -119,7 +118,6 @@ export const Pages: CollectionConfig<'pages'> = {
 										...rootFeatures.filter((f) => f.key !== 'toolbarInline'),
 										FixedToolbarFeature(),
 										BlocksFeature({ blocks: [ImageBlock, FormBlock] }),
-										HTMLConverterFeature(),
 										//LayoutFeature(),
 										EXPERIMENTAL_TableFeature(),
 										UploadFeature({

@@ -17,7 +17,6 @@ import {
 	EXPERIMENTAL_TableFeature,
 	FixedToolbarFeature,
 	UploadFeature,
-	HTMLConverterFeature,
 	BoldFeature,
 	ItalicFeature,
 	UnderlineFeature,
@@ -132,7 +131,6 @@ export const Posts: CollectionConfig<'posts'> = {
 										...rootFeatures,
 										FixedToolbarFeature(),
 										BlocksFeature({ blocks: [ImageBlock, ExcerptBlock] }),
-										HTMLConverterFeature(),
 										//LayoutFeature(),
 										EXPERIMENTAL_TableFeature(),
 										UploadFeature({
