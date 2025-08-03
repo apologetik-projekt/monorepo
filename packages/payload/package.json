@@ -1,0 +1,41 @@
+{
+	"name": "@repo/payload",
+	"description": "Apologetik Payload CMS configuration",
+	"type": "module",
+	"exports": {
+		"./importMap.js": "./importMap.js",
+		"./config": "./payload.config.ts",
+		"./utilities": "./utilities/index.ts",
+		".": {
+			"types": "./types.d.ts"
+		}
+	},
+	"dependencies": {
+		"@payloadcms/db-postgres": "3.49.0",
+		"@payloadcms/email-nodemailer": "3.49.0",
+		"@payloadcms/payload-cloud": "3.49.0",
+		"@payloadcms/plugin-form-builder": "3.49.0",
+		"@payloadcms/plugin-redirects": "3.49.0",
+		"@payloadcms/plugin-search": "3.49.0",
+		"@payloadcms/plugin-sentry": "3.49.0",
+		"@payloadcms/plugin-seo": "3.49.0",
+		"@payloadcms/richtext-lexical": "3.49.0",
+		"@payloadcms/storage-azure": "3.49.0",
+		"@payloadcms/translations": "3.49.0",
+		"@payloadcms/ui": "3.49.0",
+		"@tanstack/react-query": "^5.83.0",
+		"@visx/axis": "^3.12.0",
+		"@visx/event": "^3.12.0",
+		"@visx/glyph": "^3.12.0",
+		"@visx/grid": "^3.12.0",
+		"@visx/group": "^3.12.0",
+		"@visx/legend": "^3.12.0",
+		"@visx/mock-data": "^3.12.0",
+		"@visx/scale": "^3.12.0",
+		"@visx/shape": "^3.12.0",
+		"@visx/tooltip": "^3.12.0",
+		"@visx/xychart": "^3.12.0",
+		"payload": "3.49.0"
+	},
+	"license": "ISC"
+}

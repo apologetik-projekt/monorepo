@@ -1,22 +1,39 @@
 {
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"baseUrl": ".",
-		"lib": ["DOM", "DOM.Iterable", "ES2022"],
-		"target": "ES2022",
-		"incremental": true,
-		"jsx": "preserve",
-		"plugins": [
-			{
-				"name": "next"
-			}
-		],
-		"paths": {
-			"@/*": ["./src/*"],
-			"#/*": ["./*"],
-			"@payload-config": ["payload/payload.config.ts"]
-		}
-	},
-	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-env.d.ts", "types/payload.d.ts"],
-	"exclude": ["node_modules"]
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2024"
+    ],
+    "target": "ES2024",
+    "incremental": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
+  "files": [],
+  "references": [
+    {
+      "path": "../../packages/payload"
+    }
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
