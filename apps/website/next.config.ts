@@ -14,6 +14,9 @@ const nextConfig = {
 	devIndicators: {
 		position: 'bottom-right',
 	},
+	turbopack: {
+		root: path.join(__dirname, '../../'),
+	},
 	images: {
 		remotePatterns: [
 			...[NEXT_PUBLIC_SERVER_URL].map((item) => {

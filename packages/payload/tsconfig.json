@@ -1,0 +1,17 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"lib": ["DOM", "DOM.Iterable", "ES2024"],
+		"composite": true,
+		"incremental": true,
+		"jsx": "preserve",
+		"paths": {
+			"@/*": ["./*"]
+		},
+		"noEmit": false,
+		"emitDeclarationOnly": true
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules"]
+}
