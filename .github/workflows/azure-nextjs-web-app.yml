@@ -67,15 +67,15 @@ jobs:
         with:
           path: ./*
           key: ${{ github.sha }}
-      - name: Zip artifact for deployment
+      - name: Prepare package
         working-directory: ./apps/website/.next/standalone/apps/website
         run: |
           mv ../../../../public public
           mv ../../../static .next/static
-          mv ../../../cache .next/cache
-          mv ../../node_modules node_modules
-          zip -r ../../../../../../release.zip .
-
+          mv ../../../cache .next/cache  
+      - name: Zip artifact for deployment
+        working-directory: ./apps/website/.next/standalone
+        run: zip -r ../../../release.zip .
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
