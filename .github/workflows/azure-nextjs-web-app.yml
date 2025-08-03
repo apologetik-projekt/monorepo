@@ -75,7 +75,7 @@ jobs:
           mv ../../../cache .next/cache
       - name: Zip artifact for deployment
         working-directory: ./apps/website/.next/standalone
-        run: zip -r ../../../../../release.zip .
+        run: zip -r ../../../../../../release.zip .
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
