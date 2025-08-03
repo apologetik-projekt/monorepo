@@ -10,6 +10,10 @@
 			"types": "./types.d.ts"
 		}
 	},
+	"scripts": {
+		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload"
+	},
 	"dependencies": {
 		"@payloadcms/db-postgres": "3.49.0",
 		"@payloadcms/email-nodemailer": "3.49.0",
