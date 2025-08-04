@@ -61,18 +61,13 @@ jobs:
       - name: Build
         working-directory: ./apps/website
         run: NEXT_TELEMETRY_DISABLED=1 pnpm run build
-      - uses: actions/cache@v4
-        name: Cache build
-        id: workflow-cache
-        with:
-          path: ./*
-          key: ${{ github.sha }}
       - name: Prepare package
         working-directory: ./apps/website/.next/standalone/apps/website
         run: |
           mv ../../../../public public
           mv ../../../static .next/static
           mv ../../../cache .next/cache
+          mv ../../node_modules node_modules
       - name: Zip artifact for deployment
         working-directory: ./apps/website/.next/standalone
         run: zip -r ../../../../release.zip .
@@ -111,4 +106,6 @@ jobs:
           slot-name: 'production'
           package: release.zip
           type: zip
+          clean: true
+          restart: true
           
