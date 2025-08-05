@@ -46,7 +46,7 @@ interface Props {
 }
 
 export async function Hero({ heading, image }: Props) {
-	preload(bgPaperDark.src, { as: 'image' })
+	preload(bgPaperDark.src, { as: 'image', fetchPriority: 'auto' })
 	return (
 		<header
 			style={{
@@ -71,6 +71,7 @@ export async function Hero({ heading, image }: Props) {
 								loading="eager"
 								placeholder="blur"
 								src={image.src}
+								priority
 							/>
 						</motion.div>
 						<motion.div

@@ -63,7 +63,7 @@ function Cards() {
 				</div>
 			</div>
 			<div className="text-white md:px-4">
-				<h3 className="text-3xl font-medium font-mono">Lese unseren Blog</h3>
+				<h2 className="text-3xl font-medium font-mono">Lese unseren Blog</h2>
 				<p className="my-3 text-gray-200">
 					Artikel zu Apologetik, Theologie, Philosophie und Wissenschaft.
 				</p>
