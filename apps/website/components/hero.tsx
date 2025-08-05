@@ -46,7 +46,7 @@ interface Props {
 }
 
 export async function Hero({ heading, image }: Props) {
-	preload(bgPaperDark.src, { as: 'image', fetchPriority: 'auto' })
+	preload(bgPaperDark.src, { as: 'image', fetchPriority: 'high' })
 	return (
 		<header
 			style={{
