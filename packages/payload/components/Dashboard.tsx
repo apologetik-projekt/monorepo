@@ -84,7 +84,7 @@ export default async function Dashboard(req: PayloadRequest) {
 												return (
 													<td key={index}>
 														<Link href={`admin/collections/${type}s/${parent}`}>
-															{version.title}
+															{version.title ?? '<Kein Titel>'}
 														</Link>
 													</td>
 												)
