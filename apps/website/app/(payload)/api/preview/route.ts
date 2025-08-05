@@ -40,27 +40,7 @@ export async function GET(req: NextRequest): Promise<Response> {
 		})
 	}
 
-	try {
-		const docs = await payload.find({
-			collection: collection as CollectionSlug,
-			draft: true,
-			limit: 1,
-			pagination: false,
-			depth: 0,
-			select: {},
-			where: {
-				slug: {
-					equals: slug,
-				},
-			},
-		})
-
-		if (!docs.docs.length) throw Error()
-	} catch {
-		draft.disable()
-		return new Response('Seite konnte nicht gefunden werden', { status: 404 })
-	}
-
 	draft.enable()
+	if (!slug) redirect('/404')
 	redirect(path)
 }
