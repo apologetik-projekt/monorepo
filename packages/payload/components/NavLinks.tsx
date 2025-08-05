@@ -8,7 +8,7 @@ import type { I18nClient, TFunction } from '@payloadcms/translations'
 function findUngroupedNavItems(
 	entities: EntityToGroup[],
 	permissions: SanitizedPermissions,
-	i18n: I18nClient,
+	i18n: I18nClient
 ) {
 	const result = entities.reduce(
 		(navItems, entityToGroup) => {
@@ -33,7 +33,7 @@ function findUngroupedNavItems(
 			}
 			return navItems
 		},
-		[] as NavGroupType['entities'],
+		[] as NavGroupType['entities']
 	)
 	return result
 }
@@ -46,18 +46,18 @@ export default function NavLinks({ permissions, payload, i18n }: ServerProps) {
 					({
 						type: EntityType.collection,
 						entity: collection,
-					}) satisfies EntityToGroup,
+					}) satisfies EntityToGroup
 			),
 			...payload.config.globals.map(
 				(global) =>
 					({
 						type: EntityType.global,
 						entity: global,
-					}) satisfies EntityToGroup,
+					}) satisfies EntityToGroup
 			),
 		],
 		permissions ?? {},
-		i18n,
+		i18n
 	)
 
 	const favorites = ['pages', 'navigation', 'media', 'redirects', 'forms', 'form-submissions']
@@ -74,7 +74,7 @@ export default function NavLinks({ permissions, payload, i18n }: ServerProps) {
 
 	function getPermission(
 		type: NavGroupType['entities'][0]['type'],
-		slug: NavGroupType['entities'][0]['slug'],
+		slug: NavGroupType['entities'][0]['slug']
 	) {
 		if (type === 'collections' && permissions?.collections) {
 			return permissions.collections[slug]?.read
@@ -94,10 +94,18 @@ export default function NavLinks({ permissions, payload, i18n }: ServerProps) {
 			{navItems.map(
 				(item) =>
 					getPermission(item.type, item.slug) && (
-						<NavLink key={item.slug} id={item.slug} href={`/admin/${item.type}/${item.slug}`}>
+						<NavLink
+							key={item.slug}
+							id={item.slug}
+							href={
+								item.slug == 'media'
+									? '/admin/collections/media/payload-folders'
+									: `/admin/${item.type}/${item.slug}`
+							}
+						>
 							{typeof item.label == 'string' ? item.label : item.label.plural}
 						</NavLink>
-					),
+					)
 			)}
 		</div>
 	)
