@@ -28,11 +28,13 @@ export default formBuilderPlugin({
 			singular: 'Formular',
 			plural: 'Formulare',
 		},
+
 		fields: ({ defaultFields }) => {
 			return defaultFields.map((field) => {
 				if ('name' in field && field.name === 'confirmationMessage') {
 					return {
 						...field,
+						label: 'Bestätigungs-Nachricht',
 						editor: lexicalEditor({
 							features: ({ rootFeatures }) => {
 								return [
@@ -45,12 +47,90 @@ export default formBuilderPlugin({
 					}
 				}
 
+				if ('name' in field) {
+					if (field.name == 'title') {
+						field.label = 'Titel'
+					}
+					if (field.name == 'submitButtonLabel') {
+						field.label = 'Text für Bestätigungs-Button'
+					}
+					if (field.name == 'confirmationType') {
+						field.label = 'Bestätigungs-Methode'
+						field.admin = {
+							...field.admin,
+							description:
+								'Wähle, ob du eine auf der Seite angezeigte Nachricht oder eine Weiterleitung zu einer anderen Seite nach dem Absenden des Formulars anzeigen möchtest.',
+						}
+						// @ts-expect-error Options are not correctly typed
+						for (const option of field.options) {
+							if (option.value == 'redirect') {
+								option.label = 'Weiterleitung'
+							}
+							if (option.value == 'message') {
+								option.label = 'Nachricht'
+							}
+						}
+					}
+					if (field.name == 'redirect') {
+						field.label = 'Weiterleitung'
+						// @ts-expect-error TODO
+						for (const f of field.fields) {
+							if ('name' in f && f.name == 'url') {
+								f.label = 'URL'
+							}
+						}
+					}
+					if (field.name == 'emails') {
+						field.label = 'E-Mails'
+						field.admin = {
+							...field.admin,
+							description:
+								'Versende benutzerdefinierte E-Mails, wenn das Formular gesendet wird. Verwende kommaseparierte Listen, um die gleiche E-Mail an mehrere Empfänger zu senden. Um einen Wert aus diesem Formular zu referenzieren, umgebe den Namen des Feldes mit doppelten geschweiften Klammern, z.B. {{firstName}}. Du kannst ein Wildcard-Zeichen {{*}} verwenden, um alle Daten auszugeben, oder {{*:table}}, um sie als HTML-Tabelle in der E-Mail zu formatieren.',
+						}
+					}
+				}
+
 				if ('name' in field && field.name === 'fields' && 'blocks' in field) {
+					field.label = 'Formular-Felder'
+					field.labels = {
+						singular: 'Feld',
+						plural: 'Felder',
+					}
 					for (const block of field.blocks) {
+						for (const field of block.fields) {
+							if ('label' in field && field.label == 'Required') {
+								field.label = 'Pflichtfeld'
+							}
+							if ('type' in field && field.type == 'row' && 'fields' in field) {
+								for (const subField of field.fields) {
+									if ('label' in subField && subField.label == 'Field Width (percentage)') {
+										subField.label = 'Breite des Feldes (Prozent)'
+									}
+									if (
+										'label' in subField &&
+										subField.label == 'Name (lowercase, no special characters)'
+									) {
+										subField.label = 'Variablen-Name (klein, keine Sonderzeichen)'
+									}
+									if ('label' in subField && subField.label == 'Label') {
+										subField.label = 'Label'
+									}
+									if ('label' in subField && subField.label == 'Default Value') {
+										subField.label = 'Standardwert'
+									}
+								}
+							}
+						}
 						if (block.slug == 'checkbox') {
 							block.labels = {
 								singular: 'Kontrollkästchen',
 								plural: 'Kontrollkästchen',
+							}
+						}
+						if (block.slug == 'number') {
+							block.labels = {
+								singular: 'Zahl',
+								plural: 'Zahlen',
 							}
 						}
 						if (block.slug == 'select') {

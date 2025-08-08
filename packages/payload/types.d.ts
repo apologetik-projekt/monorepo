@@ -532,7 +532,7 @@ export interface Form {
     | null;
   submitButtonLabel?: string | null;
   /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   * Wähle, ob du eine auf der Seite angezeigte Nachricht oder eine Weiterleitung zu einer anderen Seite nach dem Absenden des Formulars anzeigen möchtest.
    */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
@@ -554,7 +554,7 @@ export interface Form {
     url: string;
   };
   /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   * Versende benutzerdefinierte E-Mails, wenn das Formular gesendet wird. Verwende kommaseparierte Listen, um die gleiche E-Mail an mehrere Empfänger zu senden. Um einen Wert aus diesem Formular zu referenzieren, umgebe den Namen des Feldes mit doppelten geschweiften Klammern, z.B. {{firstName}}. Du kannst ein Wildcard-Zeichen {{*}} verwenden, um alle Daten auszugeben, oder {{*:table}}, um sie als HTML-Tabelle in der E-Mail zu formatieren.
    */
   emails?:
     | {
