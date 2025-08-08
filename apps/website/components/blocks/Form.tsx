@@ -16,7 +16,7 @@ export function FormBlock({ node }: { node: SerializedBlockNode }) {
 				field: name,
 				value: String(value),
 			}))
-		return payload.create({
+		return await payload.create({
 			collection: 'form-submissions',
 			data: {
 				form: form.id,
@@ -113,7 +113,7 @@ export function FormBlock({ node }: { node: SerializedBlockNode }) {
 									required={input.required ?? false}
 									placeholder={input.placeholder ?? undefined}
 									rows={8}
-									className="block my-1 w-full input-field"
+									className="block my-1 w-full input-field field-sizing-contents"
 									name={input.name}
 								></textarea>
 							</div>

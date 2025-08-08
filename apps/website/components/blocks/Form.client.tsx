@@ -58,6 +58,15 @@ export function Form({ action, children, ...props }: FormProps) {
 				return result
 			}
 		} catch (_e: any) {
+			//TODO: Refactor this hack
+			setTimeout(() => {
+				for (const [name, value] of formData.entries()) {
+					const input = document.getElementsByName(name)[0] as HTMLInputElement
+					if (input) {
+						input.value = String(value)
+					}
+				}
+			}, 500)
 			return 'error'
 		}
 		return 'idle'
@@ -72,7 +81,9 @@ export function Form({ action, children, ...props }: FormProps) {
 	if (state == 'error') {
 		return (
 			<form {...props} action={formAction}>
-				<div className="text-red-500">Unerwarteter Error! Bitte versuche es erneut.</div>
+				<div className="text-red-500">
+					Ein unerwarteter Fehler ist aufgetreten! Bitte versuche es erneut.
+				</div>
 				{children}
 			</form>
 		)
