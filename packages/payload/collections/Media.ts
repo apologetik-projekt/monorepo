@@ -13,6 +13,7 @@ export const Media: CollectionConfig = {
 	},
 	admin: {
 		group: false,
+		groupBy: true,
 	},
 	access: {
 		read: () => true,
@@ -26,7 +27,7 @@ export const Media: CollectionConfig = {
 	folders: true,
 	upload: {
 		// Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-		staticDir: path.resolve(dirname, '../../apps/website/public/media'),
+		staticDir: path.resolve(dirname, '../../../apps/website/public/media'),
 		adminThumbnail: 'thumbnail',
 		focalPoint: true,
 		imageSizes: [

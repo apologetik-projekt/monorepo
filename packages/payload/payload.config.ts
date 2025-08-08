@@ -1,5 +1,5 @@
 import { defaultEditorFeatures, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload'
+import { buildConfig, type CollectionConfig } from 'payload'
 import { de } from '@payloadcms/translations/languages/de'
 import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
@@ -73,6 +73,13 @@ export default buildConfig({
 	folders: {
 		browseByFolder: false,
 		collectionSpecific: true,
+		collectionOverrides: [
+			({ collection }: { collection: CollectionConfig }) => {
+				collection.labels!.singular = 'Ordner'
+				collection.labels!.plural = 'Ordner'
+				return collection
+			},
+		],
 	},
 	editor: lexicalEditor({ features: defaultEditorFeatures }),
 	sharp: sharp,

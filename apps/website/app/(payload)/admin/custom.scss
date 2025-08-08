@@ -60,3 +60,7 @@ a.nav__link:not(:focus):not(.active) {
 .nav__logout:hover svg rect {
 	display: block;
 }
+
+.list-pills:has(#alle-dateien), .list-pills:has(#alle-dateien) + * {
+	display: none;
+}
