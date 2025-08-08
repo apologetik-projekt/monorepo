@@ -4,13 +4,13 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-		"dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
-		"devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-		"lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
-		"start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+		"build": "next build",
+		"dev": "next dev --turbo",
+		"devsafe": "rm -rf .next && next dev",
+		"lint": "next lint",
+		"start": "next start",
 		"start:azure": "PORT=8080 pm2 start server.js --no-daemon",
-		"analyze": "cross-env ANALYZE=true pnpm run build"
+		"analyze": "ANALYZE=true pnpm run build"
 	},
 	"dependencies": {
 		"@next/bundle-analyzer": "^15.3.2",

@@ -16,9 +16,8 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"],
+      "@payload-config": ["../../packages/payload/payload.config.ts"]
     }
   },
   "include": [

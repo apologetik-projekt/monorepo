@@ -30,7 +30,7 @@ export default buildConfig({
 		user: Users.slug,
 		importMap: {
 			baseDir: path.resolve(dirname),
-			importMapFile: './importMap.js',
+			importMapFile: `${path.resolve(dirname)}/importMap.js`,
 		},
 		meta: {
 			titleSuffix: '| Apologetik Projekt CMS',
@@ -78,7 +78,7 @@ export default buildConfig({
 	sharp: sharp,
 	plugins: [seoPlugin, formBuilderPlugin, redirectPlugin, azureBlobStoragePlugin],
 	typescript: {
-		outputFile: path.resolve(dirname, '../types.d.ts'),
+		outputFile: path.resolve(dirname, './types.d.ts'),
 	},
 	i18n: {
 		fallbackLanguage: 'de',
