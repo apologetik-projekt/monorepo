@@ -30,7 +30,7 @@ export default buildConfig({
 		user: Users.slug,
 		importMap: {
 			baseDir: path.resolve(dirname),
-			importMapFile: `${path.resolve(dirname)}/importMap.js`,
+			importMapFile: path.resolve(dirname, './importMap.js'),
 		},
 		meta: {
 			titleSuffix: '| Apologetik Projekt CMS',
