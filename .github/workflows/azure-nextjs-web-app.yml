@@ -65,8 +65,8 @@ jobs:
         run: |
           mv ../../../../public public
           cp -r ../../../static .next/static
+          rm -rf ../../../cache/webpack
           cp -r ../../../cache .next/cache
-          rm -rf .next/cache/webpack
           cp -r ../../node_modules node_modules
       - name: Zip artifact for deployment
         working-directory: ./apps/website/.next/standalone
