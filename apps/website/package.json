@@ -12,8 +12,9 @@
 		"start:azure": "PORT=8080 pm2 start server.js --no-daemon",
 		"analyze": "ANALYZE=true pnpm run build",
 		"preinstall": "npx only-allow pnpm",
-		"db:start": "(cd ../../packages/payload && pnpm run db:start)",
-		"db:stop": "(cd ../../packages/payload && pnpm run db:stop)"
+		"payload": "pnpm --filter=payload payload",
+		"db:start": "pnpm --filter=payload db:start",
+		"db:stop": "pnpm --filter=payload db:stop"
 	},
 	"dependencies": {
 		"@next/bundle-analyzer": "^15.3.2",
