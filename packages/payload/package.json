@@ -11,7 +11,7 @@
 		}
 	},
 	"scripts": {
-		"payload": "payload",
+		"payload": "SMTP_SKIP_VERIFY=true payload",
 		"preinstall": "npx only-allow pnpm",
 		"db:start": "docker compose up -d",
 		"db:stop": "docker compose down"
