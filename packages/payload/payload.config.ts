@@ -1,5 +1,5 @@
 import { defaultEditorFeatures, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig, type CollectionConfig } from 'payload'
+import { buildConfig, type CollectionConfig, type EmailAdapter } from 'payload'
 import { de } from '@payloadcms/translations/languages/de'
 import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
@@ -17,7 +17,9 @@ import seoPlugin from './plugins/seo'
 import formBuilderPlugin from './plugins/formBuilder'
 import redirectPlugin from './plugins/redirects'
 import azureBlobStoragePlugin from './plugins/azureBlobStorage'
-import nodeMailer from './plugins/emailAdapter'
+import { nodeMailer, consoleMailer } from './plugins/emailAdapter'
+import { getConnectionString } from './utilities/database'
+import { randomBytes } from 'crypto'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -66,7 +68,7 @@ export default buildConfig({
 	globals: [Navigation],
 	db: postgresAdapter({
 		pool: {
-			connectionString: process.env.DATABASE_URI || '',
+			connectionString: getConnectionString(),
 		},
 		migrationDir: path.resolve(dirname, './migrations'),
 	}),
@@ -95,11 +97,12 @@ export default buildConfig({
 				general: {
 					createNew: 'Neuen Eintrag erstellen',
 					createNewLabel: 'Neuen Eintrag erstellen',
+					aboutToDelete: 'Wollen Sie diesen Eintrag wirklich löschen?',
 				},
 			},
 		},
 	},
-	email: nodeMailer,
-	secret: process.env.PAYLOAD_SECRET || '',
+	email: process.env.SMTP_HOST ? nodeMailer : consoleMailer(),
+	secret: process.env.PAYLOAD_SECRET || randomBytes(32).toString('base64'),
 	telemetry: false,
 })

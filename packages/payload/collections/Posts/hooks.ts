@@ -5,7 +5,7 @@ import type {
 } from 'payload'
 import type { Post } from '../../types'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { getTextContent } from '../../utilities/getTextContent'
+import { getTextContent } from '../../utilities/formatter'
 import { readingTime } from '../../utilities/readingTime'
 
 export const revalidatePost: CollectionAfterChangeHook<Post> = ({

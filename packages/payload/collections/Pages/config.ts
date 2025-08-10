@@ -19,7 +19,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { slugField } from '../../fields/slug/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { generatePreviewPath } from '../../utilities/previewPath'
 import { customAlphabet, urlAlphabet } from 'nanoid'
 import { isAdmin } from '../../access/isAdmin'
 import { FormBlock } from '../../blocks/Form'

@@ -31,7 +31,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { slugField } from '../../fields/slug/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { generatePreviewPath } from '../../utilities/previewPath'
 import { ExcerptBlock } from '../../blocks/Excerpt'
 import { revalidateDelete, revalidatePost, updateReadingTime } from './hooks'
 

@@ -11,9 +11,10 @@
 		}
 	},
 	"scripts": {
-		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-		"preinstall": "npx only-allow pnpm"
+		"payload": "payload",
+		"preinstall": "npx only-allow pnpm",
+		"db:start": "docker compose up -d",
+		"db:stop": "docker compose down"
 	},
 	"dependencies": {
 		"@payloadcms/db-postgres": "3.50.0",

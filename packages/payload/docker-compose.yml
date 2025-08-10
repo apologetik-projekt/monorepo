@@ -1,15 +1,18 @@
 services:
   postgres:
+    container_name: payload-database
     image: postgres:latest
     restart: always
     ports:
       - '5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-payload}
     env_file:
       - .env
-    logging:
-      driver: none
 
 volumes:
   pgdata:

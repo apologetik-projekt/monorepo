@@ -1,6 +1,6 @@
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
-export default nodemailerAdapter({
+export const nodeMailer = nodemailerAdapter({
 	skipVerify: process.env.SMTP_SKIP_VERIFY == 'true',
 	defaultFromAddress: 'DoNotReply@apologetik-projekt.de',
 	defaultFromName: 'Apologetik Projekt',
@@ -13,3 +13,8 @@ export default nodemailerAdapter({
 		},
 	},
 })
+
+export function consoleMailer() {
+	process.env.SMTP_SKIP_VERIFY = 'true'
+	return undefined
+}
