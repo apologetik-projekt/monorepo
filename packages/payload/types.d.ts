@@ -565,7 +565,7 @@ export interface Form {
         emailFrom?: string | null;
         subject: string;
         /**
-         * Enter the message that should be sent in this email.
+         * Gib hier die Nachricht ein, die versendet wird, wenn die E-Mail versendet wird.
          */
         message?: {
           root: {

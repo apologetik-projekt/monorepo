@@ -87,6 +87,35 @@ export default formBuilderPlugin({
 							description:
 								'Versende benutzerdefinierte E-Mails, wenn das Formular gesendet wird. Verwende kommaseparierte Listen, um die gleiche E-Mail an mehrere Empfänger zu senden. Um einen Wert aus diesem Formular zu referenzieren, umgebe den Namen des Feldes mit doppelten geschweiften Klammern, z.B. {{firstName}}. Du kannst ein Wildcard-Zeichen {{*}} verwenden, um alle Daten auszugeben, oder {{*:table}}, um sie als HTML-Tabelle in der E-Mail zu formatieren.',
 						}
+						// @ts-expect-error TODO
+						for (const f of field.fields) {
+							if ('name' in f && f.name == 'subject') {
+								f.label = 'Betreff'
+								f.defaultValue = 'Neue Nachricht von apologetik-projekt.de'
+							}
+							if ('name' in f && f.name == 'message') {
+								f.label = 'Nachricht'
+								f.admin.description =
+									'Gib hier die Nachricht ein, die versendet wird, wenn die E-Mail versendet wird.'
+							}
+							console.log(f)
+							if ('type' in f && f.type == 'row' && 'fields' in f) {
+								for (const subField of f.fields) {
+									if ('name' in subField && subField.name == 'emailTo') {
+										subField.label = 'Empfänger'
+									}
+									if ('name' in subField && subField.name == 'replyTo') {
+										subField.label = 'Antwort geht an'
+										subField.admin.placeholder = 'z.B. info@apologetik-projekt.de oder {{email}}'
+									}
+									if ('name' in subField && subField.name == 'emailFrom') {
+										subField.label = 'Absender'
+										subField.defaultValue =
+											'"Apologetik Projekt" <DoNotReply@apologetik-projekt.de>'
+									}
+								}
+							}
+						}
 					}
 				}
 
