@@ -130,6 +130,9 @@ export default formBuilderPlugin({
 							if ('label' in field && field.label == 'Required') {
 								field.label = 'Pflichtfeld'
 							}
+							if ('label' in field && field.label == 'Field Width (percentage)') {
+								field.label = 'Breite des Feldes (Prozent)'
+							}
 							if ('type' in field && field.type == 'row' && 'fields' in field) {
 								for (const subField of field.fields) {
 									if ('label' in subField && subField.label == 'Field Width (percentage)') {
@@ -142,10 +145,13 @@ export default formBuilderPlugin({
 										subField.label = 'Variablen-Name (klein, keine Sonderzeichen)'
 									}
 									if ('label' in subField && subField.label == 'Label') {
-										subField.label = 'Label'
+										subField.label = 'Beschriftung'
 									}
 									if ('label' in subField && subField.label == 'Default Value') {
 										subField.label = 'Standardwert'
+									}
+									if ('label' in subField && subField.label == 'Required') {
+										subField.label = 'Pflichtfeld'
 									}
 								}
 							}
