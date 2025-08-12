@@ -12,6 +12,7 @@ type Props = {
 }
 
 export const generatePreviewPath = ({ collection, slug = '404' }: Props) => {
+	if (slug == '') slug = '404'
 	const path = `${collectionPrefixMap[collection]}/${slug}`
 
 	const params = {
