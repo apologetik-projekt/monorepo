@@ -10,10 +10,10 @@ export const LivePreviewListener: React.FC = () => {
 	function onMessage(event: MessageEvent) {
 		const slug = event.data.data.slug
 		if (!slug) return
-		if (queue) clearTimeout(queue)
 		const pathname = window.location.pathname
 		const newPathname = structuredClone(pathname).replace(/\/[^/]+$/, `/${slug}`)
 		if (newPathname != pathname) {
+			if (queue) clearTimeout(queue)
 			queue = setTimeout(() => {
 				document.location.assign(newPathname)
 				queue = null
