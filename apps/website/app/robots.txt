@@ -1,0 +1,7 @@
+User-agent: *
+Disallow:
+
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://apologetik-projekt.de/sitemap.xml
