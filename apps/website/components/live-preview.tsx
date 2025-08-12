@@ -6,14 +6,17 @@ import React from 'react'
 
 export const LivePreviewListener: React.FC = () => {
 	const router = useRouter()
+	let queue: NodeJS.Timeout | null
 	function onMessage(event: MessageEvent) {
+		if (queue) clearTimeout(queue)
 		const slug = event.data.data.slug
 		if (!slug) return
 		const pathname = window.location.pathname
 		const newPathname = structuredClone(pathname).replace(/\/[^/]+$/, `/${slug}`)
 		if (newPathname != pathname) {
-			setTimeout(() => {
+			queue = setTimeout(() => {
 				document.location.assign(newPathname)
+				queue = null
 			}, 500)
 		}
 	}
