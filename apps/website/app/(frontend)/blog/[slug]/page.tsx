@@ -97,15 +97,17 @@ export default async function Article({ params: paramsPromise }: Args) {
 				<Author author={article.author} date={article.publishedAt} slug={slug} />
 			</header>
 
-			<div className="my-3 -mx-4 md:m-4 md:mb-6" style={{ viewTransitionName: `image-${slug}` }}>
-				<Image
-					className="object-cover bg-black origin-center w-full aspect-video"
-					src={(typeof article.coverImage == 'object' && article.coverImage?.url) || ''}
-					alt="Image"
-					width={400}
-					height={225}
-				/>
-			</div>
+			{typeof article.coverImage == 'object' && article.coverImage?.url && (
+				<div className="my-3 -mx-4 md:m-4 md:mb-6" style={{ viewTransitionName: `image-${slug}` }}>
+					<Image
+						className="object-cover bg-black origin-center w-full aspect-video"
+						src={article.coverImage.url}
+						alt="Image"
+						width={400}
+						height={225}
+					/>
+				</div>
+			)}
 
 			{new Date(article.publishedAt as string) <= safeDate && (
 				<div className="-mx-[5px] md:mx-4 md:mb-8">

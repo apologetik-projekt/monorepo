@@ -67,17 +67,16 @@ export const Posts: CollectionConfig<'posts'> = {
 		livePreview: {
 			url: ({ data, req }) => {
 				const path = generatePreviewPath({
-					slug: typeof data?.slug === 'string' ? data.slug : '',
+					slug: typeof data?.slug === 'string' ? data.slug : undefined,
 					collection: 'posts',
 					req,
 				})
-
 				return path
 			},
 		},
 		preview: (data, { req }) =>
 			generatePreviewPath({
-				slug: typeof data?.slug === 'string' ? data.slug : '',
+				slug: typeof data?.slug === 'string' ? data.slug : undefined,
 				collection: 'posts',
 				req,
 			}),

@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@repo/payload/config'
-import type { CollectionSlug } from 'payload'
 import { NextRequest } from 'next/server'
 import { redirect } from 'next/navigation'
 import * as v from 'valibot'
@@ -16,7 +15,7 @@ const searchParamsSchema = v.object({
 export async function GET(req: NextRequest): Promise<Response> {
 	const params = v.safeParse(searchParamsSchema, Object.fromEntries(req.nextUrl.searchParams))
 	if (!params.success) return new Response(params.issues.join('\n'), { status: 404 })
-	const { path, collection, slug } = params.output
+	const { path } = params.output
 
 	if (!path.startsWith('/')) {
 		return new Response('Dieser Endpunkt kann nur für interne Vorschauen verwendet werden', {
@@ -41,6 +40,5 @@ export async function GET(req: NextRequest): Promise<Response> {
 	}
 
 	draft.enable()
-	if (!slug) redirect('/404')
 	redirect(path)
 }

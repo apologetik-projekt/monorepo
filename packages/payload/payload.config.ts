@@ -1,5 +1,5 @@
 import { defaultEditorFeatures, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig, type CollectionConfig, type EmailAdapter } from 'payload'
+import { buildConfig, type CollectionConfig } from 'payload'
 import { de } from '@payloadcms/translations/languages/de'
 import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
@@ -97,7 +97,9 @@ export default buildConfig({
 				general: {
 					createNew: 'Neuen Eintrag erstellen',
 					createNewLabel: 'Neuen Eintrag erstellen',
-					aboutToDelete: 'Wollen Sie diesen Eintrag wirklich löschen?',
+				},
+				version: {
+					schedulePublish: 'Veröffentlichung planen',
 				},
 			},
 		},

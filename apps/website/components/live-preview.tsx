@@ -8,6 +8,7 @@ export const LivePreviewListener: React.FC = () => {
 	const router = useRouter()
 	function onMessage(event: MessageEvent) {
 		const slug = event.data.data.slug
+		if (!slug) return
 		const pathname = window.location.pathname
 		const newPathname = structuredClone(pathname).replace(/\/[^/]+$/, `/${slug}`)
 		if (newPathname != pathname) {
@@ -51,7 +52,7 @@ export function PayloadLivePreview(props: {
 				}
 			}
 		},
-		[refresh, serverURL]
+		[refresh, serverURL, onMessageCallback]
 	)
 
 	useEffect(() => {

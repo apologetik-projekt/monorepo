@@ -98,7 +98,6 @@ export default formBuilderPlugin({
 								f.admin.description =
 									'Gib hier die Nachricht ein, die versendet wird, wenn die E-Mail versendet wird.'
 							}
-							console.log(f)
 							if ('type' in f && f.type == 'row' && 'fields' in f) {
 								for (const subField of f.fields) {
 									if ('name' in subField && subField.name == 'emailTo') {
