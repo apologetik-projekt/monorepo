@@ -3,5 +3,8 @@ Disallow:
 
 Disallow: /api/
 Disallow: /_next/
+Disallow: /kontakt
+Disallow: /impressum
+Disallow: /datenschutz
 
 Sitemap: https://apologetik-projekt.de/sitemap.xml
