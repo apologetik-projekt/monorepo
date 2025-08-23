@@ -7,6 +7,7 @@ import Altcha from '../altcha'
 
 export function FormBlock({ node }: { node: SerializedBlockNode }) {
 	const form = node.fields.form
+	if (!form) return null
 	async function action(formData: FormData) {
 		'use server'
 		const payload = await getPayload({ config })
