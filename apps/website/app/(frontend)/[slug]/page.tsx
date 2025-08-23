@@ -9,6 +9,7 @@ import { LivePreviewListener } from '@/components/live-preview'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { redirect } from 'next/navigation'
 import AdminBar from '@/components/admin-bar'
+import { getClientSideURL } from '@/utilities/getURL'
 
 type Args = {
 	params: Promise<{
@@ -44,7 +45,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 			{hasToken && (
 				<AdminBar
 					initialMode={draft ? 'draft' : 'live'}
-					payloadUrl="http://localhost:3000"
+					payloadUrl={getClientSideURL()}
 					collection="pages"
 					documentId={page.id}
 				/>

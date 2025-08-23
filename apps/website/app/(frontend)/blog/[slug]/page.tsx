@@ -11,6 +11,7 @@ import { AudioPlayer } from '@/components/audio-player'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { LivePreviewListener } from '@/components/live-preview'
 import AdminBar from '@/components/admin-bar'
+import { getClientSideURL } from '@/utilities/getURL'
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 	const { isEnabled: draft } = await draftMode()
@@ -133,7 +134,7 @@ export default async function Article({ params: paramsPromise }: Args) {
 			{hasToken && (
 				<AdminBar
 					initialMode={draft ? 'draft' : 'live'}
-					payloadUrl="http://localhost:3000"
+					payloadUrl={getClientSideURL()}
 					collection="posts"
 					documentId={article.id}
 				/>
