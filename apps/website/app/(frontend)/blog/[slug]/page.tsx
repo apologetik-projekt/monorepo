@@ -4,12 +4,13 @@ import type { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@repo/payload/config'
-import { draftMode } from 'next/headers'
+import { cookies, draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { AudioPlayer } from '@/components/audio-player'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { LivePreviewListener } from '@/components/live-preview'
+import AdminBar from '@/components/admin-bar'
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 	const { isEnabled: draft } = await draftMode()
@@ -81,6 +82,7 @@ export default async function Article({ params: paramsPromise }: Args) {
 	const { slug } = await paramsPromise
 	const article = await queryPostBySlug({ slug })
 	const { isEnabled: draft } = await draftMode()
+	const hasToken = !!(await cookies()).get('payload-token')
 
 	if (!article) notFound()
 
@@ -128,6 +130,14 @@ export default async function Article({ params: paramsPromise }: Args) {
 					<RichText className="break-words" data={article.appendix!} />
 				)}
 			</section>
+			{hasToken && (
+				<AdminBar
+					initialMode={draft ? 'draft' : 'live'}
+					payloadUrl="http://localhost:3000"
+					collection="posts"
+					documentId={article.id}
+				/>
+			)}
 		</article>
 	)
 }

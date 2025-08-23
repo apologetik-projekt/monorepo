@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import { PayloadRedirects } from '@/components/redirects'
 import configPromise from '@repo/payload/config'
 import { getPayload } from 'payload'
-import { draftMode } from 'next/headers'
+import { cookies, draftMode } from 'next/headers'
 import { cache } from 'react'
 import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/live-preview'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { redirect } from 'next/navigation'
+import AdminBar from '@/components/admin-bar'
 
 type Args = {
 	params: Promise<{
@@ -21,6 +22,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 	const { slug, index = false } = await paramsPromise
 	if ((!slug && !draft) || (slug == 'home' && !index)) redirect('/')
 	const url = '/' + slug
+	const hasToken = !!(await cookies()).get('payload-token')
 
 	let page = await queryPageBySlug({ slug })
 	if (!page) return <PayloadRedirects url={url} />
@@ -39,6 +41,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 			<div className="prose max-w-2xl my-2 mx-auto md:prose-base">
 				<RenderBlocks content={page.content} />
 			</div>
+			{hasToken && (
+				<AdminBar
+					initialMode={draft ? 'draft' : 'live'}
+					payloadUrl="http://localhost:3000"
+					collection="pages"
+					documentId={page.id}
+				/>
+			)}
 		</main>
 	)
 }
