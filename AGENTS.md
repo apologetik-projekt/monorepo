@@ -1,7 +1,7 @@
 # AGENTS Guide — Apologetik Monorepo
 
 ## Snapshot
-- pnpm-managed monorepo with a Next.js 15 App Router frontend (`apps/website`) and a Payload CMS 3.50 backend (`packages/payload`).
+- pnpm-managed monorepo with a Next.js 15 App Router frontend (`apps/website`) and a Payload CMS 3.57 backend (`packages/payload`).
 - Node.js ≥ 22.18 and pnpm ≥ 10.14 are required; all packages enforce pnpm via `preinstall` scripts.
 - Strict TypeScript configuration is shared from the repo root; both packages extend it and rely on project references.
 - Sentry (web + CMS) and Plausible analytics are wired in but stay inert locally unless credentials are present.

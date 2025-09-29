@@ -8,8 +8,8 @@
 	"sideEffects": false,
 	"packageManager": "pnpm@10.14.0",
 	"dependencies": {
-		"@payloadcms/db-postgres": "3.50.0",
-		"payload": "3.50.0"
+		"@payloadcms/db-postgres": "3.57.0",
+		"payload": "3.57.0"
 	},
 	"scripts": {
 		"preinstall": "npx --yes only-allow pnpm"
